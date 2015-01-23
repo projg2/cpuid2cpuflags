@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+# vim:se fileencoding=utf8
 # (c) 2015 Michał Górny
 # Released under the 2-clause BSD license
 
