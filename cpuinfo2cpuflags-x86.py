@@ -12,7 +12,12 @@ def main(*argv):
 		try:
 			import portage
 		except ImportError:
-			return 'Unable to determine PORTDIR, please set it before calling this script'
+			return '''
+Unable to import portage modules in order to determine the Gentoo
+repository location. Please either make sure to run the script with
+a Python implementation supported by your Portage installation or
+export PORTDIR variable before running the script.
+'''
 		else:
 			trees = portage.create_trees(
 					config_root = os.environ.get('PORTAGE_CONFIGROOT'),
@@ -42,7 +47,14 @@ def main(*argv):
 						flag_dict[m.group('flag')].append(m.group('flag'))
 	except OSError as e:
 		if e.errno == errno.ENOENT:
-			return '%s does not exist, set PORTDIR to correct gentoo repository location' % desc
+			return '''
+Unable to find the profiles/desc/cpu_flags_x86.desc file that is needed
+to determine the correct CPU_FLAGS_X86 values. Please either update
+your Gentoo repostiory checkout ('emerge --sync') or export PORTDIR
+to a (newer) Gentoo repository checkout.
+
+The current PORTDIR is: %s
+''' % portdir
 
 	out = set()
 
