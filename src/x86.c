@@ -53,6 +53,7 @@ struct flag_info flags[] = {
 	{ "aes", {{ INTEL_ECX, (1 << 25) }} },
 	{ "avx", {{ INTEL_ECX, (1 << 28) }} },
 	{ "avx2", {{ INTEL_SUB0_EBX, (1 << 5) }} },
+	{ "f16c", {{ INTEL_ECX, (1 << 29) }} },
 	{ "fma3", {{ INTEL_ECX, (1 << 12) }} },
 	{ "fma4", {{ AMD_ECX, (1 << 16) }} },
 	{ "mmx", {{ INTEL_EDX, (1 << 23) }} },
