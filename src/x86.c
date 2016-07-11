@@ -28,6 +28,7 @@ enum check_type
 	INTEL_ECX,
 	INTEL_EDX,
 	INTEL_SUB0_EBX,
+	INTEL_SUB0_ECX,
 	AMD_ECX,
 	AMD_EDX,
 	VIA_EDX,
@@ -53,6 +54,14 @@ struct flag_info flags[] = {
 	{ "aes", {{ INTEL_ECX, (1 << 25) }} },
 	{ "avx", {{ INTEL_ECX, (1 << 28) }} },
 	{ "avx2", {{ INTEL_SUB0_EBX, (1 << 5) }} },
+	{ "avx512f", {{ INTEL_SUB0_EBX, (1 << 16) }} },
+	{ "avx512dq", {{ INTEL_SUB0_EBX, (1 << 17) }} },
+	{ "avx512pf", {{ INTEL_SUB0_EBX, (1 << 26) }} },
+	{ "avx512er", {{ INTEL_SUB0_EBX, (1 << 27) }} },
+	{ "avx512cd", {{ INTEL_SUB0_EBX, (1 << 28) }} },
+	{ "avx512bw", {{ INTEL_SUB0_EBX, (1 << 30) }} },
+	{ "avx512vl", {{ INTEL_SUB0_EBX, (1 << 31) }} },
+	{ "avx512vbmi", {{ INTEL_SUB0_ECX, (1 << 1) }} },
 	{ "f16c", {{ INTEL_ECX, (1 << 29) }} },
 	{ "fma3", {{ INTEL_ECX, (1 << 12) }} },
 	{ "fma4", {{ AMD_ECX, (1 << 16) }} },
@@ -122,7 +131,7 @@ int run_cpuid_sub(uint32_t level, uint32_t sublevel, uint32_t* eax, uint32_t* eb
 
 int main(int argc, char* argv[])
 {
-	uint32_t intel_ecx = 0, intel_edx = 0, intel_sub0_ebx = 0;
+	uint32_t intel_ecx = 0, intel_edx = 0, intel_sub0_ebx = 0, intel_sub0_ecx = 0;
 	uint32_t amd_ecx = 0, amd_edx = 0;
 	uint32_t centaur_edx = 0;
 
@@ -134,7 +143,7 @@ int main(int argc, char* argv[])
 	/* Intel */
 	got_intel = run_cpuid(0x00000001, 0, 0, &intel_ecx, &intel_edx);
 	/* Intel ext. */
-	got_intel_sub0 = run_cpuid_sub(0x00000007, 0x00000000, 0, &intel_sub0_ebx, 0, 0);
+	got_intel_sub0 = run_cpuid_sub(0x00000007, 0x00000000, 0, &intel_sub0_ebx, &intel_sub0_ecx, 0);
 	/* AMD */
 	got_amd = run_cpuid(0x80000001, 0, 0, &amd_ecx, &amd_edx);
 	/* Centaur (VIA) */
@@ -162,6 +171,10 @@ int main(int argc, char* argv[])
 				case INTEL_SUB0_EBX:
 					if (got_intel_sub0)
 						reg = &intel_sub0_ebx;
+					break;
+				case INTEL_SUB0_ECX:
+					if (got_intel_sub0)
+						reg = &intel_sub0_ecx;
 					break;
 				case AMD_ECX:
 					if (got_amd)
