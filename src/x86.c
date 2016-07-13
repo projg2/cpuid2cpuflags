@@ -1,5 +1,6 @@
-/* cpuflags2cpuinfo-x86
- * (c) 2015 Michał Górny, 2-clause BSD licensed
+/* cpuid2cpuflags
+ * (c) 2015-2016 Michał Górny
+ * 2-clause BSD licensed
  */
 
 #ifdef HAVE_CONFIG_H
