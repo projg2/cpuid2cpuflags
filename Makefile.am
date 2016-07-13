@@ -2,7 +2,9 @@ ACLOCAL_AMFLAGS = -I m4
 
 bin_PROGRAMS = cpuid2cpuflags
 
-cpuid2cpuflags_SOURCES = src/x86.c
+cpuid2cpuflags_SOURCES = \
+	src/main.c \
+	src/x86.c
 
 EXTRA_DIST = NEWS
 NEWS: configure.ac Makefile.am
