@@ -20,8 +20,6 @@
 #	error "Compiler not supported"
 #endif
 
-static const int not_reached = 0;
-
 enum check_type
 {
 	CHECK_SENTINEL = 0,
@@ -190,11 +188,11 @@ int main(int argc, char* argv[])
 						reg = &centaur_edx;
 					break;
 				case CHECK_SENTINEL:
+					assert(0 && "CHECK_SENTINEL reached");
 				case CHECK_MAX:
-					assert(not_reached);
+					assert(0 && "CHECK_MAX reached");
 			}
-			if (flags[i].checks[j].type > CHECK_MAX)
-				assert(not_reached);
+			assert(flags[i].checks[j].type <= CHECK_MAX);
 
 			if (reg)
 			{
