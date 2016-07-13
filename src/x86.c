@@ -6,6 +6,9 @@
 #ifdef HAVE_CONFIG_H
 #	include "config.h"
 #endif
+#include "platforms.h"
+
+#ifdef CPUID_X86
 
 #include <stdio.h>
 #include <string.h>
@@ -216,3 +219,5 @@ void print_x86()
 
 	fputs("\n", stdout);
 }
+
+#endif /*CPUID_X86*/
