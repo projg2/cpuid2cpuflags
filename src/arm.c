@@ -19,9 +19,45 @@
 
 #if defined(__GLIBC__) && defined(__linux__)
 #	include <sys/auxv.h>
+#	include <sys/utsname.h>
 #else
 #	error "Platform not supported"
 #endif
+
+enum cpu_subarch
+{
+	SUBARCH_V4 = (1 << 0),
+	SUBARCH_V4T = (1 << 1) | SUBARCH_V4,
+	SUBARCH_V5 = (1 << 2) | SUBARCH_V4T,
+	SUBARCH_V5T = (1 << 3) | SUBARCH_V5,
+	SUBARCH_V5TE = (1 << 4) | SUBARCH_V5T,
+	SUBARCH_V5TEJ = (1 << 5) | SUBARCH_V5TE,
+	SUBARCH_V6 = (1 << 6) | SUBARCH_V5TEJ,
+	SUBARCH_V7 = (1 << 7) | SUBARCH_V6,
+	SUBARCH_V8 = (1 << 8) | SUBARCH_V7,
+
+	SUBARCH_MAX
+};
+
+struct subarch_info
+{
+	const char* name;
+	enum cpu_subarch subarch;
+};
+
+struct subarch_info subarches[] = {
+	/* grep -Rho string.*cpu_arch_name.*$ arch/arm | sort -u */
+	/* start with newest as the most likely */
+	{ "armv7", SUBARCH_V7 },
+	{ "armv6", SUBARCH_V6 },
+	{ "armv5tej", SUBARCH_V5TEJ },
+	{ "armv5te", SUBARCH_V5TE },
+	{ "armv5t", SUBARCH_V5T },
+	{ "armv4t", SUBARCH_V4T },
+	{ "armv4", SUBARCH_V4 },
+
+	{ 0 }
+};
 
 enum check_type
 {
@@ -29,6 +65,7 @@ enum check_type
 
 	CHECK_HWCAP,
 	CHECK_HWCAP2,
+	CHECK_SUBARCH,
 
 	CHECK_MAX
 };
@@ -59,18 +96,44 @@ struct flag_info flags[] = {
 	{ "sha1", {{ CHECK_HWCAP2, (1 << 2) }} },
 	{ "sha2", {{ CHECK_HWCAP2, (1 << 3) }} },
 	{ "crc32", {{ CHECK_HWCAP2, (1 << 4) }} },
+
+	/* subarches */
+	{ "v4", {{ CHECK_SUBARCH, SUBARCH_V4 }} },
+	{ "v5", {{ CHECK_SUBARCH, SUBARCH_V5 }} },
+	{ "v6", {{ CHECK_SUBARCH, SUBARCH_V6 }} },
+	{ "v7", {{ CHECK_SUBARCH, SUBARCH_V7 }} },
+	{ "v8", {{ CHECK_SUBARCH, SUBARCH_V8 }} },
+
 	{ 0 }
 };
 
 void print_arm()
 {
-	unsigned long hwcap = 0, hwcap2 = 0;
+	unsigned long hwcap = 0, hwcap2 = 0, subarch = 0;
+	struct utsname uname_res;
 	int i, j;
 
 	hwcap = getauxval(AT_HWCAP);
 #ifdef AT_HWCAP2
 	hwcap2 = getauxval(AT_HWCAP2);
 #endif
+	if (uname(&uname_res) != -1)
+	{
+		size_t len = strlen(uname_res.machine);
+		/* strip endianness suffix */
+		if (len > 0 && (uname_res.machine[len-1] == 'l'
+					|| uname_res.machine[len-1] == 'b'))
+			uname_res.machine[len-1] = '\0';
+
+		for (i = 0; subarches[i].name; ++i)
+		{
+			if (!strcmp(uname_res.machine, subarches[i].name))
+			{
+				subarch = subarches[i].subarch;
+				break;
+			}
+		}
+	}
 
 	fputs("CPU_FLAGS_ARM:", stdout);
 
@@ -88,6 +151,9 @@ void print_arm()
 					break;
 				case CHECK_HWCAP2:
 					reg = &hwcap2;
+					break;
+				case CHECK_SUBARCH:
+					reg = &subarch;
 					break;
 				case CHECK_SENTINEL:
 					assert(0 && "CHECK_SENTINEL reached");
