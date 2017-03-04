@@ -1,5 +1,5 @@
 /* cpuid2cpuflags
- * (c) 2015-2016 Michał Górny
+ * (c) 2015-2017 Michał Górny
  * 2-clause BSD licensed
  */
 
@@ -13,6 +13,8 @@
 
 /* x86.c */
 void print_x86();
+/* arm.c */
+void print_arm();
 
 struct option long_options[] = {
 	{ "help", no_argument, 0, 'h' },
@@ -54,6 +56,9 @@ int main(int argc, char* argv[])
 
 #ifdef CPUID_X86
 	print_x86();
+#endif
+#ifdef CPUID_ARM
+	print_arm();
 #endif
 
 	return 0;
