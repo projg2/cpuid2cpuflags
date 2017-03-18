@@ -49,6 +49,7 @@ struct subarch_info
 struct subarch_info subarches[] = {
 	/* grep -Rho string.*cpu_arch_name.*$ arch/arm | sort -u */
 	/* start with newest as the most likely */
+	{ "aarch64", SUBARCH_V8 },
 	{ "armv7", SUBARCH_V7 },
 	{ "armv6", SUBARCH_V6 },
 	{ "armv5tej", SUBARCH_V5TEJ },
@@ -66,6 +67,7 @@ enum check_type
 
 	CHECK_HWCAP,
 	CHECK_HWCAP2,
+	CHECK_AARCH64_HWCAP,
 	CHECK_SUBARCH,
 
 	CHECK_MAX
@@ -84,6 +86,7 @@ struct flag_info
 };
 
 struct flag_info flags[] = {
+	/* arm variant */
 	/* copied outta linux/arch/arm/include/uapi/asm/hwcap.h */
 	{ "edsp", {{ CHECK_HWCAP, (1 << 7) }} },
 	{ "iwmmxt", {{ CHECK_HWCAP, (1 << 9) }} },
@@ -97,6 +100,20 @@ struct flag_info flags[] = {
 	{ "sha1", {{ CHECK_HWCAP2, (1 << 2) }} },
 	{ "sha2", {{ CHECK_HWCAP2, (1 << 3) }} },
 	{ "crc32", {{ CHECK_HWCAP2, (1 << 4) }} },
+
+	/* aarch64 variant */
+	/* copied outta linux/arch/arm64/include/uapi/asm/hwcap.h */
+	{ "edsp", {{ CHECK_SUBARCH, SUBARCH_V8 }} },
+	{ "neon", {{ CHECK_AARCH64_HWCAP, (1 << 1) }} }, /* HWCAP_ASIMD */
+	{ "thumb", {{ CHECK_SUBARCH, SUBARCH_V8 }} },
+	{ "vfp", {{ CHECK_SUBARCH, SUBARCH_V8 }} },
+	{ "vfpv3", {{ CHECK_SUBARCH, SUBARCH_V8 }} },
+	{ "vfpv4", {{ CHECK_SUBARCH, SUBARCH_V8 }} },
+	{ "vfp-d32", {{ CHECK_SUBARCH, SUBARCH_V8 }} },
+	{ "aes", {{ CHECK_AARCH64_HWCAP, (1 << 3) }} },
+	{ "sha1", {{ CHECK_AARCH64_HWCAP, (1 << 5) }} },
+	{ "sha2", {{ CHECK_AARCH64_HWCAP, (1 << 6) }} },
+	{ "crc32", {{ CHECK_AARCH64_HWCAP, (1 << 7) }} },
 
 	/* subarches */
 	{ "v4", {{ CHECK_SUBARCH, SUBARCH_V4 }} },
@@ -152,10 +169,16 @@ void print_arm()
 			switch (flags[i].checks[j].type)
 			{
 				case CHECK_HWCAP:
-					reg = &hwcap;
+					if (subarch < SUBARCH_V8)
+						reg = &hwcap;
 					break;
 				case CHECK_HWCAP2:
-					reg = &hwcap2;
+					if (subarch < SUBARCH_V8)
+						reg = &hwcap2;
+					break;
+				case CHECK_AARCH64_HWCAP:
+					if (subarch >= SUBARCH_V8)
+						reg = &hwcap;
 					break;
 				case CHECK_SUBARCH:
 					reg = &subarch;
