@@ -33,8 +33,9 @@ enum cpu_subarch
 	SUBARCH_V5TE = (1 << 4) | SUBARCH_V5T,
 	SUBARCH_V5TEJ = (1 << 5) | SUBARCH_V5TE,
 	SUBARCH_V6 = (1 << 6) | SUBARCH_V5TEJ,
-	SUBARCH_V7 = (1 << 7) | SUBARCH_V6,
-	SUBARCH_V8 = (1 << 8) | SUBARCH_V7,
+	SUBARCH_V6T2 = (1 << 7) | SUBARCH_V6,
+	SUBARCH_V7 = (1 << 8) | SUBARCH_V6T2,
+	SUBARCH_V8 = (1 << 9) | SUBARCH_V7,
 
 	SUBARCH_MAX
 };
@@ -103,6 +104,10 @@ struct flag_info flags[] = {
 	{ "v6", {{ CHECK_SUBARCH, SUBARCH_V6 }} },
 	{ "v7", {{ CHECK_SUBARCH, SUBARCH_V7 }} },
 	{ "v8", {{ CHECK_SUBARCH, SUBARCH_V8 }} },
+
+	/* other bits */
+	/* TODO: figure out how to detect it better? */
+	{ "thumb2", {{ CHECK_SUBARCH, SUBARCH_V6T2 }} },
 
 	{ 0 }
 };
