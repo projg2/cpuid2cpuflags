@@ -6,6 +6,7 @@
 #ifdef HAVE_CONFIG_H
 #	include "config.h"
 #endif
+#include "formats.h"
 #include "platforms.h"
 
 #ifdef CPUID_ARM
@@ -129,7 +130,7 @@ struct flag_info flags[] = {
 	{ 0 }
 };
 
-void print_arm()
+void print_arm(enum output_format fmt)
 {
 	unsigned long hwcap = 0, hwcap2 = 0, subarch = 0;
 	struct utsname uname_res;
@@ -157,7 +158,11 @@ void print_arm()
 		}
 	}
 
-	fputs("CPU_FLAGS_ARM:", stdout);
+	fputs("CPU_FLAGS_ARM", stdout);
+	if (fmt == FORMAT_MAKE_CONF)
+		fputs("=\"", stdout);
+	else
+		fputc(':', stdout);
 
 	for (i = 0; flags[i].name; ++i)
 	{
@@ -205,6 +210,9 @@ void print_arm()
 			}
 		}
 	}
+
+	if (fmt == FORMAT_MAKE_CONF)
+		fputc('"', stdout);
 
 	fputs("\n", stdout);
 }
