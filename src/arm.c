@@ -133,7 +133,7 @@ void print_arm()
 {
 	unsigned long hwcap = 0, hwcap2 = 0, subarch = 0;
 	struct utsname uname_res;
-	int i, j;
+	int i, j, printed;
 
 	hwcap = getauxval(AT_HWCAP);
 #ifdef AT_HWCAP2
@@ -157,7 +157,7 @@ void print_arm()
 		}
 	}
 
-	fputs("CPU_FLAGS_ARM:", stdout);
+	fputs("CPU_FLAGS_ARM=\"", stdout);
 
 	for (i = 0; flags[i].name; ++i)
 	{
@@ -198,15 +198,17 @@ void print_arm()
 
 			if (match)
 			{
-				fputc(' ', stdout);
+				if (printed)
+					fputc(' ', stdout);
 				fputs(flags[i].name, stdout);
+				printed = 1;
 
 				break;
 			}
 		}
 	}
 
-	fputs("\n", stdout);
+	fputs("\"\n", stdout);
 }
 
 #endif /*CPUID_ARM*/

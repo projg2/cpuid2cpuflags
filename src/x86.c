@@ -140,7 +140,7 @@ void print_x86()
 	int got_intel, got_intel_sub0, got_amd, got_centaur;
 
 	const char* last = "";
-	int i, j;
+	int i, j, printed = 0;
 
 	/* Intel */
 	got_intel = run_cpuid(0x00000001, 0, 0, &intel_ecx, &intel_edx);
@@ -151,7 +151,7 @@ void print_x86()
 	/* Centaur (VIA) */
 	got_centaur = run_cpuid(0xC0000001, 0, 0, 0, &centaur_edx);
 
-	fputs("CPU_FLAGS_X86:", stdout);
+	fputs("CPU_FLAGS_X86=\"", stdout);
 
 	for (i = 0; flags[i].name; ++i)
 	{
@@ -207,17 +207,19 @@ void print_x86()
 			{
 				if (strcmp(last, flags[i].name))
 				{
-					fputc(' ', stdout);
+					if (printed)
+						fputc(' ', stdout);
 					fputs(flags[i].name, stdout);
 
 					last = flags[i].name;
+					printed = 1;
 				}
 				break;
 			}
 		}
 	}
 
-	fputs("\n", stdout);
+	fputs("\"\n", stdout);
 }
 
 #endif /*CPUID_X86*/
