@@ -161,6 +161,18 @@ int print_arm()
 				break;
 			}
 		}
+
+		if (subarch == 0)
+		{
+			fprintf(stderr, "Error: unknown ARM architecture '%s'\n",
+					uname_res.machine);
+			return 1;
+		}
+	}
+	else
+	{
+		perror("Error: uname() failed");
+		return 1;
 	}
 
 	fputs("CPU_FLAGS_ARM:", stdout);
