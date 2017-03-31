@@ -1,0 +1,68 @@
+cpuid2cpuflags -- CPU_FLAGS_* generator
+(c) 2017 Michał Górny
+2-clause BSD license
+
+
+Usage
+~~~~~
+
+The program attempts to obtain the identification and capabilities
+of the currently used CPU, and print the matching set of CPU_FLAGS_*
+flags for Gentoo. To use it, just run it:
+
+  $ cpuid2cpuflags
+  CPU_FLAGS_X86: 3dnow 3dnowext mmx mmxext sse sse2 sse3
+
+There are no command-line options. Please note that the program
+identifies the apparent CPU capabilities using available CPU calls
+or system interfaces, *not* the capabilities indicated by compiler
+flags.
+
+The flag definitions match the flags described in Gentoo profiles/desc
+at the time of program release. If additional flags are introduced
+in the future, they will be added in a future program release.
+
+The output format is compatible both with Portage (package.use)
+and Paludis (use.conf/options.conf). If you find it useful to
+generate/update it automatically, you can use a dedicated file:
+
+  $ mkdir /etc/portage/package.use   # if not used yet
+  $ echo "*/* $(cpuid2cpuflags)" > /etc/portage/package.use/00cpuflags
+
+
+Implementation details
+~~~~~~~~~~~~~~~~~~~~~~
+
+X86 (incl. x86-64)
+------------------
+
+On x86 platforms, cpuid2cpuflags issues the CPUID instruction to obtain
+processor capabilities. This should work reliably across different
+systems and kernels, unless the system somehow blocks this instruction.
+If this is the case, please report a bug.
+
+
+ARM and AArch64
+---------------
+
+On ARM platforms, the userspace processes are not allowed to obtain
+processor information directly. Instead, the program is relying
+on kernel identification of the CPU provided via the system interfaces.
+Currently, only Linux is supported.
+
+On Linux, two interfaces are used: uname() to identify the CPU family,
+and getauxval(AT_HWCAP*...) to obtain detailed feature flags.
+
+The textual value obtained from uname (armv* or aarch64) is used
+to enable appropriate ARM version flags and some feature flags. It is
+also used to determine whether the kernel is 64- or 32-bit since that
+affects the interpretation of AT_HWCAP* flags.
+
+Afterwards, the remaining feature flags are enabled based on either flag
+bits provided by AT_HWCAP*, or implicitly based on the subarchitecture
+(i.e. currently a number of features is always set on AArch64).
+
+It should be noted that the program strongly depends on correct
+identification of the CPU in the kernel. If you find the results
+incorrect, please report a bug but I can't promise I'll be able to find
+a good workaround.
