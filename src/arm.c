@@ -135,7 +135,7 @@ struct flag_info flags[] = {
 	{ 0 }
 };
 
-void print_arm()
+int print_arm()
 {
 	unsigned long hwcap = 0, hwcap2 = 0, subarch = 0;
 	struct utsname uname_res;
@@ -215,6 +215,7 @@ void print_arm()
 	}
 
 	fputs("\n", stdout);
+	return 0;
 }
 
 #endif /*CPUID_ARM*/

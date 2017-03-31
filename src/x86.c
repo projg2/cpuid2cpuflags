@@ -131,7 +131,7 @@ int run_cpuid_sub(uint32_t level, uint32_t sublevel, uint32_t* eax, uint32_t* eb
 	return 1;
 }
 
-void print_x86()
+int print_x86()
 {
 	uint32_t intel_ecx = 0, intel_edx = 0, intel_sub0_ebx = 0, intel_sub0_ecx = 0;
 	uint32_t amd_ecx = 0, amd_edx = 0;
@@ -218,6 +218,7 @@ void print_x86()
 	}
 
 	fputs("\n", stdout);
+	return 0;
 }
 
 #endif /*CPUID_X86*/

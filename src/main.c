@@ -12,9 +12,9 @@
 #include <stdio.h>
 
 /* x86.c */
-void print_x86();
+int print_x86();
 /* arm.c */
-void print_arm();
+int print_arm();
 
 struct option long_options[] = {
 	{ "help", no_argument, 0, 'h' },
@@ -55,11 +55,9 @@ int main(int argc, char* argv[])
 	}
 
 #ifdef CPUID_X86
-	print_x86();
+	return print_x86();
 #endif
 #ifdef CPUID_ARM
-	print_arm();
+	return print_arm();
 #endif
-
-	return 0;
 }
