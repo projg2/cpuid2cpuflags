@@ -16,7 +16,7 @@
 /configure
 /libtool
 /m4/
-/cpuinfo2cpuflags-x86
+/cpuid2cpuflags
 /stamp-h1
 Makefile
 Makefile.in
