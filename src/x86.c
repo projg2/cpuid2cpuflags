@@ -17,10 +17,10 @@
 #endif
 #include <assert.h>
 
-#ifdef __GNUC__
+#ifdef HAVE_CPUID_H
 #	include <cpuid.h>
 #else
-#	error "Compiler not supported"
+#	error "Compiler not supported (no cpuid.h)"
 #endif
 
 enum check_type
@@ -88,7 +88,6 @@ int run_cpuid(uint32_t level, uint32_t* eax, uint32_t* ebx, uint32_t* ecx, uint3
 {
 	uint32_t eax_, ebx_, ecx_, edx_;
 
-#ifdef __GNUC__
 	/* We can't use __get_cpuid() since it can't do Centaur extended
 	 * flags (it's limited to Intel & AMD namespaces by poor design) */
 
@@ -97,7 +96,6 @@ int run_cpuid(uint32_t level, uint32_t* eax, uint32_t* ebx, uint32_t* ecx, uint3
 	if (__get_cpuid_max(level & 0xf0000000, 0) < level)
 		return 0;
 	__cpuid(level, eax_, ebx_, ecx_, edx_);
-#endif
 
 	if (eax)
 		*eax = eax_;
@@ -114,11 +112,9 @@ int run_cpuid_sub(uint32_t level, uint32_t sublevel, uint32_t* eax, uint32_t* eb
 {
 	uint32_t eax_, ebx_, ecx_, edx_;
 
-#ifdef __GNUC__
 	if (__get_cpuid_max(level & 0xf0000000, 0) < level)
 		return 0;
 	__cpuid_count(level, sublevel, eax_, ebx_, ecx_, edx_);
-#endif
 
 	if (eax)
 		*eax = eax_;
