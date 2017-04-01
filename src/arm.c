@@ -17,11 +17,16 @@
 #endif
 #include <assert.h>
 
-#if defined(__GLIBC__) && defined(__linux__)
+#ifdef HAVE_SYS_AUXV_H
 #	include <sys/auxv.h>
-#	include <sys/utsname.h>
-#else
-#	error "Platform not supported"
+#endif
+#include <sys/utsname.h>
+
+#ifndef __linux__
+#	error "Platform not supported (only Linux supported at the moment)"
+#endif
+#ifndef HAVE_GETAUXVAL
+#	error "Platform not supported (no getauxval())"
 #endif
 
 enum cpu_subarch

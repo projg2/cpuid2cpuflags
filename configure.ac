@@ -10,6 +10,10 @@ AC_PROG_CC
 AC_USE_SYSTEM_EXTENSIONS
 
 AC_TYPE_UINT32_T
+# TODO: skip this on x86?
+AC_CHECK_HEADERS([sys/auxv.h], [
+	AC_CHECK_FUNCS([getauxval])
+])
 
 AC_CONFIG_HEADER([config.h])
 AC_CONFIG_FILES([Makefile])
