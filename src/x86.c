@@ -81,6 +81,7 @@ struct flag_info flags[] = {
 	{ "sse4a", {{ AMD_ECX, (1 << 6) }} },
 	{ "ssse3", {{ INTEL_ECX, (1 << 9) }} },
 	{ "xop", {{ AMD_ECX, (1 << 11) }} },
+	{ "pclmul", {{ INTEL_ECX, (1 << 1 ) }} },
 	{ 0 }
 };
 
