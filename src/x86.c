@@ -71,6 +71,7 @@ struct flag_info flags[] = {
 	{ "mmxext", {{ INTEL_EDX, (1 << 25) }} }, /* implied by SSE on Intel */
 	{ "mmxext", {{ AMD_EDX, (1 << 22) }} }, /* AMD */
 	{ "padlock", {{ VIA_EDX, (1 << 10) }} }, /* PHE */
+	{ "pclmul", {{ INTEL_ECX, (1 << 1) }} },
 	{ "popcnt", {{ INTEL_ECX, (1 << 23) }} }, /* Intel */
 	{ "popcnt", {{ AMD_ECX, (1 << 5) }} }, /* ABM on AMD; XXX: manuals say it's LZCNT */
 	{ "sse", {{ INTEL_EDX, (1 << 25) }} },
