@@ -30,6 +30,16 @@ generate/update it automatically, you can use a dedicated file:
   $ echo "*/* $(cpuid2cpuflags)" > /etc/portage/package.use/00cpuflags
 
 
+Building
+~~~~~
+
+These are the steps necessary to build the ./cpuid2cpuflags program:
+
+  $ autoreconf -vi
+  $ ./configure -C
+  $ make
+
+
 Implementation details
 ~~~~~~~~~~~~~~~~~~~~~~
 
