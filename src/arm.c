@@ -7,6 +7,7 @@
 #	include "config.h"
 #endif
 #include "platforms.h"
+#include "output.h"
 
 #ifdef CPUID_ARM
 
@@ -180,7 +181,7 @@ int print_arm()
 		return 1;
 	}
 
-	fputs("CPU_FLAGS_ARM:", stdout);
+	output_prefix("CPU_FLAGS_ARM", stdout);
 
 	for (i = 0; flags[i].name; ++i)
 	{
@@ -223,15 +224,14 @@ int print_arm()
 
 			if (match)
 			{
-				fputc(' ', stdout);
-				fputs(flags[i].name, stdout);
+				output_flag(flags[i].name, stdout);
 
 				break;
 			}
 		}
 	}
 
-	fputs("\n", stdout);
+	output_suffix(stdout);
 	return 0;
 }
 
