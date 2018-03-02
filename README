@@ -22,7 +22,7 @@ The flag definitions match the flags described in Gentoo profiles/desc
 at the time of program release. If additional flags are introduced
 in the future, they will be added in a future program release.
 
-The output format is compatible both with Portage (package.use)
+The default output format is compatible both with Portage (package.use)
 and Paludis (use.conf/options.conf). If you find it useful to
 generate/update it automatically, you can use a dedicated file:
 
