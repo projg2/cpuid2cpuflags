@@ -9,7 +9,7 @@
 #include <stdio.h>
 
 enum output_format {
-	PACKAGEUSE, MAKECONF
+	PACKAGEUSE, MAKECONF, PLAIN
 };
 
 void output_set(enum output_format f);

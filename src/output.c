@@ -31,6 +31,8 @@ void output_prefix(const char *var_name, FILE *file) {
 			fputs(var_name, file);
 			fputs("=\"", file);
 			break;
+		case PLAIN:
+			break;
 		default:
 			perror(ERROR_UNKOWN_FORMAT);
 			break;
@@ -47,6 +49,7 @@ void output_flag(const char *flag, FILE *file) {
 
 void output_suffix(FILE *file) {
 	switch(current_format) {
+		case PLAIN:
 		case PACKAGEUSE:
 			fputs("\n", file);
 			break;

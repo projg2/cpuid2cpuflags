@@ -35,7 +35,8 @@ const char* usage = "Usage: %s [options]\n"
 	"FORMAT:\n"
 	"  use                      compatible with Paludis (use.conf/options.conf)\n"
 	"                           and Portage (package.use). This is the default.\n"
-	"  make                     compatible with Portage (make.conf)\n";
+	"  make                     compatible with Portage (make.conf)\n"
+	"  plain                    space-separated list of flags\n";
 
 int main(int argc, char* argv[])
 {
@@ -56,6 +57,8 @@ int main(int argc, char* argv[])
 					output_set(PACKAGEUSE);
 				} else if(strcmp(optarg, "make") == 0) {
 					output_set(MAKECONF);
+				} else if(strcmp(optarg, "plain") == 0) {
+					output_set(PLAIN);
 				} else {
 					fprintf(stderr, "%s: unknown FORMAT value '%s'\n", argv[0], optarg);
 					fprintf(stderr, usage, argv[0]);
