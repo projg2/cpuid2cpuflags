@@ -30,6 +30,10 @@ generate/update it automatically, you can use a dedicated file:
   $ echo "*/* $(cpuid2cpuflags)" > /etc/portage/package.use/00cpuflags
 
 Additional output formats are supported through the --format option.
+For instance, the "make" format is compatible with Portage's make.conf:
+
+  $ cpuid2cpuflags --format make >> /etc/portage/make.conf
+
 
 Building
 ~~~~~
