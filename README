@@ -40,13 +40,9 @@ Building
 
 These are the steps necessary to build the ./cpuid2cpuflags program:
 
-  $ aclocal
-  $ autoconf
-  $ autoheader
-  $ mkdir -p build-aux
-  $ automake --add-missing
-  $ ./configure
-  $ make
+  $ autoreconf -vi
+  $ ./configure -C
+  $ make -j
 
 
 Implementation details
