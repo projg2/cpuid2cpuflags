@@ -29,6 +29,7 @@ generate/update it automatically, you can use a dedicated file:
   $ mkdir /etc/portage/package.use   # if not used yet
   $ echo "*/* $(cpuid2cpuflags)" > /etc/portage/package.use/00cpuflags
 
+Additional output formats are supported through the --format option.
 
 Building
 ~~~~~
