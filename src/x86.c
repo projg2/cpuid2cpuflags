@@ -7,6 +7,7 @@
 #	include "config.h"
 #endif
 #include "platforms.h"
+#include "output.h"
 
 #ifdef CPUID_X86
 
@@ -148,7 +149,7 @@ int print_x86()
 	/* Centaur (VIA) */
 	got_centaur = run_cpuid(0xC0000001, 0, 0, 0, &centaur_edx);
 
-	fputs("CPU_FLAGS_X86:", stdout);
+	output_prefix("CPU_FLAGS_X86", stdout);
 
 	for (i = 0; flags[i].name; ++i)
 	{
@@ -204,8 +205,7 @@ int print_x86()
 			{
 				if (strcmp(last, flags[i].name))
 				{
-					fputc(' ', stdout);
-					fputs(flags[i].name, stdout);
+					output_flag(flags[i].name, stdout);
 
 					last = flags[i].name;
 				}
@@ -214,7 +214,7 @@ int print_x86()
 		}
 	}
 
-	fputs("\n", stdout);
+	output_suffix(stdout);
 	return 0;
 }
 
