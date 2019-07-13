@@ -27,7 +27,7 @@ LOG_COMPILER = sh $(top_srcdir)/tests/test.sh $(builddir)
 TESTS = \
 	tests/x86/amd-colfax.txt \
 	tests/x86/athlon64-windsor.txt \
-	tests/x86/corei5.txt \
+	tests/x86/i3-ivybridge.txt \
 	tests/x86/opteron-6272.txt \
 	tests/x86/xeon-e-2176g.txt \
 	tests/x86/xeon-silver-4410.txt
