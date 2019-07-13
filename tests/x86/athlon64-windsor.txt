@@ -1,0 +1,3 @@
+expected:3dnow 3dnowext mmx mmxext sse sse2 sse3
+top:00000001:00040fb2:01020800:00002001:178bfbff
+top:80000001:00040fb2:0000090d:0000001f:ebd3fbff

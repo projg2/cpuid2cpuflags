@@ -11,8 +11,8 @@
 #include <getopt.h>
 #include <stdio.h>
 
-/* x86.c */
-int print_x86();
+#include "x86.h"
+
 /* arm.c */
 int print_arm();
 
