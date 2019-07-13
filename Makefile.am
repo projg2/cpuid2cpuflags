@@ -25,6 +25,7 @@ x86_mock_CPPFLAGS = -DCPUID_X86 -DCPUID_MOCK
 
 LOG_COMPILER = sh $(top_srcdir)/tests/test.sh $(builddir)
 TESTS = \
+	tests/x86/amd-colfax.txt \
 	tests/x86/athlon64-windsor.txt \
 	tests/x86/corei5.txt \
 	tests/x86/opteron-6272.txt \
