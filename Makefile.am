@@ -28,3 +28,5 @@ TESTS = \
 	tests/x86/athlon64-windsor.txt \
 	tests/x86/corei5.txt \
 	tests/x86/opteron-6272.txt
+
+EXTRA_DIST = $(TESTS) tests/test.sh
