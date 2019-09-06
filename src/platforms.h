@@ -9,6 +9,8 @@
 #		define CPUID_X86
 #	elif defined(__arm__) || defined(__aarch64__)
 #		define CPUID_ARM
+#	elif defined(__powerpc__)
+#		define CPUID_PPC
 #	else
 #		error "Unsupported platform, please report"
 #	endif

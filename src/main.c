@@ -16,6 +16,9 @@
 /* arm.c */
 int print_arm();
 
+/* ppc.c */
+int print_ppc();
+
 struct option long_options[] = {
 	{ "help", no_argument, 0, 'h' },
 	{ "version", no_argument, 0, 'V' },
@@ -59,5 +62,8 @@ int main(int argc, char* argv[])
 #endif
 #ifdef CPUID_ARM
 	return print_arm();
+#endif
+#ifdef CPUID_PPC
+	return print_ppc();
 #endif
 }
