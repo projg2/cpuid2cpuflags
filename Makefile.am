@@ -1,7 +1,7 @@
 ACLOCAL_AMFLAGS = -I m4
 
 bin_PROGRAMS = cpuid2cpuflags
-EXTRA_PROGRAMS = x86-dump
+EXTRA_PROGRAMS = hwcap-dump x86-dump
 check_PROGRAMS = x86-mock
 
 cpuid2cpuflags_SOURCES = \
@@ -11,6 +11,9 @@ cpuid2cpuflags_SOURCES = \
 	src/x86.c \
 	src/x86-lib.c \
 	src/x86.h
+
+hwcap_dump_SOURCES = \
+	src/hwcap-dump.c
 
 x86_dump_SOURCES = \
 	src/x86-dump.c \
