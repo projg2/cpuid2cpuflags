@@ -22,7 +22,6 @@
 #ifdef HAVE_SYS_AUXV_H
 #	include <sys/auxv.h>
 #endif
-#include <sys/utsname.h>
 
 #ifndef __linux__
 #	error "Platform not supported (only Linux supported at the moment)"
@@ -48,7 +47,7 @@ struct check_desc
 struct flag_info
 {
 	const char* name;
-	struct check_desc checks[3];
+	struct check_desc checks[2];
 };
 
 struct flag_info flags[] = {
@@ -57,17 +56,14 @@ struct flag_info flags[] = {
 	{ "altivec", {{ CHECK_HWCAP, 0x10000000 }} },
 	/* PPC_FEATURE_HAS_VSX */
 	{ "vsx", {{ CHECK_HWCAP, 0x00000080 }} },
-	/* only ISA 3.00 CPU is P9, but it's possible to build a compliant
-	 * CPU that only implements the scalar instructions and not vsx */
-	/*  PPC_FEATURE_HAS_VSX | PPC_FEATURE2_ARCH_3_00 */
-	{ "vsx3", {{ CHECK_HWCAP, 0x00000080 }, { CHECK_HWCAP2, 0x00800000 }} },
+	/* PPC_FEATURE2_ARCH_3_00 */
+	{ "vsx3", {{ CHECK_HWCAP2, 0x00800000 }} },
 	{ 0 }
 };
 
 int print_ppc()
 {
 	unsigned long hwcap = 0, hwcap2 = 0;
-	struct utsname uname_res;
 	int i, j;
 
 	hwcap = getauxval(AT_HWCAP);
