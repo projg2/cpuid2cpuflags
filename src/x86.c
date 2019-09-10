@@ -82,7 +82,7 @@ struct flag_info flags[] = {
 	{ 0 }
 };
 
-int print_x86()
+int print_flags()
 {
 	uint32_t intel_ecx = 0, intel_edx = 0, intel_sub0_ebx = 0, intel_sub0_ecx = 0;
 	uint32_t amd_ecx = 0, amd_edx = 0;

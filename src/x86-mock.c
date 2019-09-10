@@ -115,7 +115,7 @@ int main(int argc, char* argv[])
 		return 1;
 	}
 
-	print_x86();
+	print_flags();
 
 	fclose(mocked_regs_f);
 	return 0;

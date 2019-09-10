@@ -131,7 +131,7 @@ struct flag_info flags[] = {
 	{ 0 }
 };
 
-int print_arm()
+int print_flags()
 {
 	unsigned long hwcap, hwcap2, subarch = 0;
 	struct utsname uname_res;

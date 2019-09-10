@@ -12,7 +12,7 @@
 
 #include "hwcap.h"
 
-int print_ppc();
+int print_flags();
 
 FILE* mocked_regs_f;
 
@@ -91,9 +91,7 @@ int main(int argc, char* argv[])
 		return 1;
 	}
 
-#ifdef CPUID_PPC
-	print_ppc();
-#endif
+	print_flags();
 
 	fclose(mocked_regs_f);
 	return 0;

@@ -52,7 +52,7 @@ struct flag_info flags[] = {
 	{ 0 }
 };
 
-int print_ppc()
+int print_flags()
 {
 	unsigned long hwcap = 0, hwcap2 = 0;
 	int i, j;

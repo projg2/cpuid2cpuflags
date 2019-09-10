@@ -11,13 +11,7 @@
 #include <getopt.h>
 #include <stdio.h>
 
-#include "x86.h"
-
-/* arm.c */
-int print_arm();
-
-/* ppc.c */
-int print_ppc();
+int print_flags();
 
 struct option long_options[] = {
 	{ "help", no_argument, 0, 'h' },
@@ -57,13 +51,5 @@ int main(int argc, char* argv[])
 		return 1;
 	}
 
-#ifdef CPUID_X86
-	return print_x86();
-#endif
-#ifdef CPUID_ARM
-	return print_arm();
-#endif
-#ifdef CPUID_PPC
-	return print_ppc();
-#endif
+	return print_flags();
 }
