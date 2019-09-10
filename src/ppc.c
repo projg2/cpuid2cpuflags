@@ -19,16 +19,7 @@
 #endif
 #include <assert.h>
 
-#ifdef HAVE_SYS_AUXV_H
-#	include <sys/auxv.h>
-#endif
-
-#ifndef __linux__
-#	error "Platform not supported (only Linux supported at the moment)"
-#endif
-#ifndef HAVE_GETAUXVAL
-#	error "Platform not supported (no getauxval())"
-#endif
+#include "hwcap.h"
 
 enum check_type
 {
@@ -66,8 +57,8 @@ int print_ppc()
 	unsigned long hwcap = 0, hwcap2 = 0;
 	int i, j;
 
-	hwcap = getauxval(AT_HWCAP);
-	hwcap2 = getauxval(AT_HWCAP2);
+	hwcap = get_hwcap();
+	hwcap2 = get_hwcap2();
 
 	fputs("CPU_FLAGS_PPC:", stdout);
 

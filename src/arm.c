@@ -16,18 +16,9 @@
 #	include <stdint.h>
 #endif
 #include <assert.h>
-
-#ifdef HAVE_SYS_AUXV_H
-#	include <sys/auxv.h>
-#endif
 #include <sys/utsname.h>
 
-#ifndef __linux__
-#	error "Platform not supported (only Linux supported at the moment)"
-#endif
-#ifndef HAVE_GETAUXVAL
-#	error "Platform not supported (no getauxval())"
-#endif
+#include "hwcap.h"
 
 enum cpu_subarch
 {
@@ -142,14 +133,12 @@ struct flag_info flags[] = {
 
 int print_arm()
 {
-	unsigned long hwcap = 0, hwcap2 = 0, subarch = 0;
+	unsigned long hwcap, hwcap2, subarch = 0;
 	struct utsname uname_res;
 	int i, j;
 
-	hwcap = getauxval(AT_HWCAP);
-#ifdef AT_HWCAP2
-	hwcap2 = getauxval(AT_HWCAP2);
-#endif
+	hwcap = get_hwcap();
+	hwcap2 = get_hwcap2();
 	if (uname(&uname_res) != -1)
 	{
 		size_t len = strlen(uname_res.machine);

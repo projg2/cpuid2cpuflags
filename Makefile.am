@@ -8,6 +8,8 @@ cpuid2cpuflags_SOURCES = \
 	src/main.c \
 	src/platforms.h \
 	src/arm.c \
+	src/hwcap.c \
+	src/hwcap.h \
 	src/ppc.c \
 	src/x86.c \
 	src/x86-lib.c \

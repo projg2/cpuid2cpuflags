@@ -10,31 +10,21 @@
 
 #include <limits.h>
 #include <stdio.h>
-#ifdef HAVE_SYS_AUXV_H
-#	include <sys/auxv.h>
-#endif
-
-#ifndef __linux__
-#	error "Platform not supported (only Linux supported at the moment)"
-#endif
-#ifndef HAVE_GETAUXVAL
-#	error "Platform not supported (no getauxval())"
-#endif
 
 #if LONG_BIT > 64
 #	error "Surprisingly long LONG_BIT value"
 #endif
 
+#include "hwcap.h"
+
 int main(int argc, char* argv[])
 {
 	unsigned long val = 0;
 
-	val = getauxval(AT_HWCAP);
+	val = get_hwcap();
 	printf("hwcap:%016lx\n", val);
-#ifdef AT_HWCAP2
-	val = getauxval(AT_HWCAP2);
+	val = get_hwcap2();
 	printf("hwcap2:%016lx\n", val);
-#endif
 
 	return 0;
 }
