@@ -16,7 +16,9 @@ cpuid2cpuflags_SOURCES = \
 	src/x86.h
 
 hwcap_dump_SOURCES = \
-	src/hwcap-dump.c
+	src/hwcap-dump.c \
+	src/hwcap.c \
+	src/hwcap.h
 
 x86_dump_SOURCES = \
 	src/x86-dump.c \
