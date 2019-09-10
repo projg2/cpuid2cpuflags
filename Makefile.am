@@ -2,7 +2,7 @@ ACLOCAL_AMFLAGS = -I m4
 
 bin_PROGRAMS = cpuid2cpuflags
 EXTRA_PROGRAMS = hwcap-dump x86-dump
-check_PROGRAMS = x86-mock
+check_PROGRAMS = ppc-mock x86-mock
 
 cpuid2cpuflags_SOURCES = \
 	src/main.c \
@@ -23,6 +23,11 @@ x86_dump_SOURCES = \
 	src/x86-lib.c \
 	src/x86.h
 
+ppc_mock_SOURCES = \
+	src/hwcap-mock.c \
+	src/ppc.c
+ppc_mock_CPPFLAGS = -DCPUID_PPC -DCPUID_MOCK
+
 x86_mock_SOURCES = \
 	src/x86-mock.c \
 	src/x86.c \
@@ -31,6 +36,8 @@ x86_mock_CPPFLAGS = -DCPUID_X86 -DCPUID_MOCK
 
 LOG_COMPILER = sh $(top_srcdir)/tests/test.sh $(builddir)
 TESTS = \
+	tests/ppc/power8.txt \
+	tests/ppc/power9.txt \
 	tests/x86/amd-colfax.txt \
 	tests/x86/athlon64-windsor.txt \
 	tests/x86/i3-ivybridge.txt \

@@ -6,8 +6,9 @@
 BINDIR=${1}
 SUITE=${2%/*}
 ARCH=${SUITE##*/}
+ARCH_UC=$(echo "${ARCH}" | tr '[[:lower:]]' '[[:upper:]]')
 MOCK=${BINDIR}/${ARCH}-mock
-EXPECTED=$(sed -n -e "s/^expected:/CPU_FLAGS_X86: /p" "${2}")
+EXPECTED=$(sed -n -e "s/^expected:/CPU_FLAGS_${ARCH_UC}: /p" "${2}")
 
 if [ -z "${EXPECTED}" ]; then
 	echo "expected: not found in test case!" >&2
