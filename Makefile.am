@@ -24,12 +24,13 @@ x86_dump_SOURCES = \
 	src/x86.h
 
 ppc_mock_SOURCES = \
-	src/hwcap-mock.c \
+	src/hwcap.h \
+	src/mock.c \
 	src/ppc.c
 ppc_mock_CPPFLAGS = -DCPUID_PPC -DCPUID_MOCK
 
 x86_mock_SOURCES = \
-	src/x86-mock.c \
+	src/mock.c \
 	src/x86.c \
 	src/x86.h
 x86_mock_CPPFLAGS = -DCPUID_X86 -DCPUID_MOCK

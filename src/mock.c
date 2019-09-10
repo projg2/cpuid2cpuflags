@@ -17,6 +17,9 @@
 #endif
 
 #include "x86.h"
+#include "hwcap.h"
+
+int print_flags();
 
 FILE* mocked_regs_f;
 
@@ -82,6 +85,64 @@ int run_cpuid_sub(uint32_t level, uint32_t sublevel, uint32_t* eax, uint32_t* eb
 			if (edx)
 				*edx = edx_;
 			return 1;
+		}
+		else if (ferror(mocked_regs_f))
+		{
+			perror("Reading mocked register file failed");
+			return 0;
+		}
+
+		/* seek to the next line */
+		do
+			ret = fgetc(mocked_regs_f);
+		while (ret != '\n' && ret != EOF);
+	}
+
+	return 0;
+}
+
+unsigned long get_hwcap()
+{
+	rewind(mocked_regs_f);
+	while (!feof(mocked_regs_f) && !ferror(mocked_regs_f))
+	{
+		unsigned long val_;
+		int ret;
+
+		ret = fscanf(mocked_regs_f, "hwcap:%016lx", &val_);
+		if (ret > 0)
+		{
+			assert(ret == 1);
+			return val_;
+		}
+		else if (ferror(mocked_regs_f))
+		{
+			perror("Reading mocked register file failed");
+			return 0;
+		}
+
+		/* seek to the next line */
+		do
+			ret = fgetc(mocked_regs_f);
+		while (ret != '\n' && ret != EOF);
+	}
+
+	return 0;
+}
+
+unsigned long get_hwcap2()
+{
+	rewind(mocked_regs_f);
+	while (!feof(mocked_regs_f) && !ferror(mocked_regs_f))
+	{
+		unsigned long val_;
+		int ret;
+
+		ret = fscanf(mocked_regs_f, "hwcap2:%016lx", &val_);
+		if (ret > 0)
+		{
+			assert(ret == 1);
+			return val_;
 		}
 		else if (ferror(mocked_regs_f))
 		{
