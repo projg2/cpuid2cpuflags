@@ -177,6 +177,41 @@ unsigned long get_hwcap2()
 	return 0;
 }
 
+/**
+ * Returns machine name from mocked test description, or NULL if missing.
+ *
+ * The data is stored in static buffer of undefined length.  The caller
+ * may modify the string, and must not free it.
+ */
+char* get_uname_machine()
+{
+	rewind(mocked_regs_f);
+	while (!feof(mocked_regs_f) && !ferror(mocked_regs_f))
+	{
+		static char buf[64];
+		int ret;
+
+		ret = fscanf(mocked_regs_f, "machine:%63s", buf);
+		if (ret > 0)
+		{
+			assert(ret == 1);
+			return buf;
+		}
+		else if (ferror(mocked_regs_f))
+		{
+			perror("Reading mocked register file failed");
+			return NULL;
+		}
+
+		/* seek to the next line */
+		do
+			ret = fgetc(mocked_regs_f);
+		while (ret != '\n' && ret != EOF);
+	}
+
+	return NULL;
+}
+
 int main(int argc, char* argv[])
 {
 	const char* mocked_regs = argv[1];

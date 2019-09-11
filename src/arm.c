@@ -16,7 +16,6 @@
 #	include <stdint.h>
 #endif
 #include <assert.h>
-#include <sys/utsname.h>
 
 #include "hwcap.h"
 
@@ -152,22 +151,22 @@ struct flag_info flags[] = {
 int print_flags()
 {
 	unsigned long hwcap, hwcap2, subarch = 0;
-	struct utsname uname_res;
+	char* uname_m;
 	int i;
 
 	hwcap = get_hwcap();
 	hwcap2 = get_hwcap2();
-	if (uname(&uname_res) != -1)
+	uname_m = get_uname_machine();
+	if (uname_m)
 	{
-		size_t len = strlen(uname_res.machine);
+		size_t len = strlen(uname_m);
 		/* strip endianness suffix */
-		if (len > 0 && (uname_res.machine[len-1] == 'l'
-					|| uname_res.machine[len-1] == 'b'))
-			uname_res.machine[len-1] = '\0';
+		if (len > 0 && (uname_m[len-1] == 'l' || uname_m[len-1] == 'b'))
+			uname_m[len-1] = '\0';
 
 		for (i = 0; subarches[i].name; ++i)
 		{
-			if (!strcmp(uname_res.machine, subarches[i].name))
+			if (!strcmp(uname_m, subarches[i].name))
 			{
 				subarch = subarches[i].subarch;
 				break;
@@ -177,7 +176,7 @@ int print_flags()
 		if (subarch == 0)
 		{
 			fprintf(stderr, "Error: unknown ARM architecture '%s'\n",
-					uname_res.machine);
+					uname_m);
 			return 1;
 		}
 	}

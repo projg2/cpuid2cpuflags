@@ -5,3 +5,4 @@
 
 unsigned long get_hwcap();
 unsigned long get_hwcap2();
+char* get_uname_machine();
