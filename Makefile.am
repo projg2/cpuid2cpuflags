@@ -50,6 +50,7 @@ TESTS = \
 	tests/arm/aarch64-odroid-n2.txt \
 	tests/arm/aarch64-raspberry-4.txt \
 	tests/arm/armv7l-beaglebone.txt \
+	tests/arm/armv7l-compulab-utilite-pro.txt \
 	tests/arm/armv7l-rk3288.txt \
 	tests/arm/armv7l-scaleway-c1.txt \
 	tests/arm/armv7l-solidrun-cubox.txt \
