@@ -19,6 +19,7 @@ hwcap_dump_SOURCES = \
 	src/hwcap-dump.c \
 	src/hwcap.c \
 	src/hwcap.h
+hwcap_dump_CPPFLAGS = -DCPUID_ARM -DCPUID_MOCK
 
 x86_dump_SOURCES = \
 	src/x86-dump.c \
