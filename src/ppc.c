@@ -34,26 +34,21 @@ enum check_type
 	CHECK_MAX
 };
 
-struct check_desc
-{
-	enum check_type type;
-	unsigned long mask;
-};
-
 struct flag_info
 {
 	const char* name;
-	struct check_desc checks[2];
+	enum check_type type;
+	unsigned long mask;
 };
 
 struct flag_info flags[] = {
 	/* taken from /usr/include/bits/hwcap.h */
 	/* PPC_FEATURE_HAS_ALTIVEC */
-	{ "altivec", {{ CHECK_HWCAP, 0x10000000 }} },
+	{ "altivec", CHECK_HWCAP, 0x10000000 },
 	/* PPC_FEATURE_HAS_VSX */
-	{ "vsx", {{ CHECK_HWCAP, 0x00000080 }} },
+	{ "vsx", CHECK_HWCAP, 0x00000080 },
 	/* PPC_FEATURE2_ARCH_3_00 */
-	{ "vsx3", {{ CHECK_HWCAP2, 0x00800000 }} },
+	{ "vsx3", CHECK_HWCAP2, 0x00800000 },
 	{ 0 }
 };
 
@@ -65,7 +60,7 @@ struct flag_info flags[] = {
 int print_flags()
 {
 	unsigned long hwcap = 0, hwcap2 = 0;
-	int i, j;
+	int i;
 
 	hwcap = get_hwcap();
 	hwcap2 = get_hwcap2();
@@ -74,38 +69,29 @@ int print_flags()
 
 	for (i = 0; flags[i].name; ++i)
 	{
-		for (j = 0; flags[i].checks[j].type != 0; ++j)
+		unsigned long* reg = 0;
+
+		switch (flags[i].type)
 		{
-			int match = 0;
-			unsigned long* reg = 0;
+			case CHECK_HWCAP:
+					reg = &hwcap;
+				break;
+			case CHECK_HWCAP2:
+					reg = &hwcap2;
+				break;
+			case CHECK_SENTINEL:
+				assert(0 && "CHECK_SENTINEL reached");
+			case CHECK_MAX:
+				assert(0 && "CHECK_MAX reached");
+		}
+		assert(flags[i].type <= CHECK_MAX);
 
-			switch (flags[i].checks[j].type)
-			{
-				case CHECK_HWCAP:
-						reg = &hwcap;
-					break;
-				case CHECK_HWCAP2:
-						reg = &hwcap2;
-					break;
-				case CHECK_SENTINEL:
-					assert(0 && "CHECK_SENTINEL reached");
-				case CHECK_MAX:
-					assert(0 && "CHECK_MAX reached");
-			}
-			assert(flags[i].checks[j].type <= CHECK_MAX);
-
-			if (reg)
-			{
-				if ((*reg & flags[i].checks[j].mask) == flags[i].checks[j].mask)
-					match = 1;
-			}
-
-			if (match)
+		if (reg)
+		{
+			if ((*reg & flags[i].mask) == flags[i].mask)
 			{
 				fputc(' ', stdout);
 				fputs(flags[i].name, stdout);
-
-				break;
 			}
 		}
 	}

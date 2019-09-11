@@ -42,51 +42,46 @@ enum check_type
 	CHECK_MAX
 };
 
-struct check_desc
+struct flag_info
 {
+	const char* name;
 	enum check_type type;
 	uint32_t mask;
 };
 
-struct flag_info
-{
-	const char* name;
-	struct check_desc checks[2];
-};
-
 struct flag_info flags[] = {
-	{ "3dnow", {{ AMD_EDX, (1 << 31) }} },
-	{ "3dnowext", {{ AMD_EDX, (1 << 30) }} }, /* 3DNow!+ */
-	{ "aes", {{ INTEL_ECX, (1 << 25) }} },
-	{ "avx", {{ INTEL_ECX, (1 << 28) }} },
-	{ "avx2", {{ INTEL_SUB0_EBX, (1 << 5) }} },
-	{ "avx512f", {{ INTEL_SUB0_EBX, (1 << 16) }} },
-	{ "avx512dq", {{ INTEL_SUB0_EBX, (1 << 17) }} },
-	{ "avx512pf", {{ INTEL_SUB0_EBX, (1 << 26) }} },
-	{ "avx512er", {{ INTEL_SUB0_EBX, (1 << 27) }} },
-	{ "avx512cd", {{ INTEL_SUB0_EBX, (1 << 28) }} },
-	{ "avx512bw", {{ INTEL_SUB0_EBX, (1 << 30) }} },
-	{ "avx512vl", {{ INTEL_SUB0_EBX, (1 << 31) }} },
-	{ "avx512vbmi", {{ INTEL_SUB0_ECX, (1 << 1) }} },
-	{ "f16c", {{ INTEL_ECX, (1 << 29) }} },
-	{ "fma3", {{ INTEL_ECX, (1 << 12) }} },
-	{ "fma4", {{ AMD_ECX, (1 << 16) }} },
-	{ "mmx", {{ INTEL_EDX, (1 << 23) }} },
-	{ "mmxext", {{ INTEL_EDX, (1 << 25) }} }, /* implied by SSE on Intel */
-	{ "mmxext", {{ AMD_EDX, (1 << 22) }} }, /* AMD */
-	{ "padlock", {{ VIA_EDX, (1 << 10) }} }, /* PHE */
-	{ "pclmul", {{ INTEL_ECX, (1 << 1) }} },
-	{ "popcnt", {{ INTEL_ECX, (1 << 23) }} }, /* Intel */
-	{ "popcnt", {{ AMD_ECX, (1 << 5) }} }, /* ABM on AMD; XXX: manuals say it's LZCNT */
-	{ "sha", {{ INTEL_SUB0_EBX, (1 << 29) }} },
-	{ "sse", {{ INTEL_EDX, (1 << 25) }} },
-	{ "sse2", {{ INTEL_EDX, (1 << 26) }} },
-	{ "sse3", {{ INTEL_ECX, (1 << 0) }} },
-	{ "sse4_1", {{ INTEL_ECX, (1 << 19) }} },
-	{ "sse4_2", {{ INTEL_ECX, (1 << 20) }} },
-	{ "sse4a", {{ AMD_ECX, (1 << 6) }} },
-	{ "ssse3", {{ INTEL_ECX, (1 << 9) }} },
-	{ "xop", {{ AMD_ECX, (1 << 11) }} },
+	{ "3dnow", AMD_EDX, (1 << 31) },
+	{ "3dnowext", AMD_EDX, (1 << 30) }, /* 3DNow!+ */
+	{ "aes", INTEL_ECX, (1 << 25) },
+	{ "avx", INTEL_ECX, (1 << 28) },
+	{ "avx2", INTEL_SUB0_EBX, (1 << 5) },
+	{ "avx512f", INTEL_SUB0_EBX, (1 << 16) },
+	{ "avx512dq", INTEL_SUB0_EBX, (1 << 17) },
+	{ "avx512pf", INTEL_SUB0_EBX, (1 << 26) },
+	{ "avx512er", INTEL_SUB0_EBX, (1 << 27) },
+	{ "avx512cd", INTEL_SUB0_EBX, (1 << 28) },
+	{ "avx512bw", INTEL_SUB0_EBX, (1 << 30) },
+	{ "avx512vl", INTEL_SUB0_EBX, (1 << 31) },
+	{ "avx512vbmi", INTEL_SUB0_ECX, (1 << 1) },
+	{ "f16c", INTEL_ECX, (1 << 29) },
+	{ "fma3", INTEL_ECX, (1 << 12) },
+	{ "fma4", AMD_ECX, (1 << 16) },
+	{ "mmx", INTEL_EDX, (1 << 23) },
+	{ "mmxext", INTEL_EDX, (1 << 25) }, /* implied by SSE on Intel */
+	{ "mmxext", AMD_EDX, (1 << 22) }, /* AMD */
+	{ "padlock", VIA_EDX, (1 << 10) }, /* PHE */
+	{ "pclmul", INTEL_ECX, (1 << 1) },
+	{ "popcnt", INTEL_ECX, (1 << 23) }, /* Intel */
+	{ "popcnt", AMD_ECX, (1 << 5) }, /* ABM on AMD; XXX: manuals say it's LZCNT */
+	{ "sha", INTEL_SUB0_EBX, (1 << 29) },
+	{ "sse", INTEL_EDX, (1 << 25) },
+	{ "sse2", INTEL_EDX, (1 << 26) },
+	{ "sse3", INTEL_ECX, (1 << 0) },
+	{ "sse4_1", INTEL_ECX, (1 << 19) },
+	{ "sse4_2", INTEL_ECX, (1 << 20) },
+	{ "sse4a", AMD_ECX, (1 << 6) },
+	{ "ssse3", INTEL_ECX, (1 << 9) },
+	{ "xop", AMD_ECX, (1 << 11) },
 	{ 0 }
 };
 
@@ -104,7 +99,7 @@ int print_flags()
 	int got_intel, got_intel_sub0, got_amd, got_centaur;
 
 	const char* last = "";
-	int i, j;
+	int i;
 
 	/* Intel */
 	got_intel = run_cpuid(0x00000001, 0, 0, &intel_ecx, &intel_edx);
@@ -119,55 +114,48 @@ int print_flags()
 
 	for (i = 0; flags[i].name; ++i)
 	{
-		for (j = 0; flags[i].checks[j].type != 0; ++j)
+		uint32_t* reg = 0;
+
+		switch (flags[i].type)
 		{
-			int match = 0;
-			uint32_t* reg = 0;
+			case INTEL_ECX:
+				if (got_intel)
+					reg = &intel_ecx;
+				break;
+			case INTEL_EDX:
+				if (got_intel)
+					reg = &intel_edx;
+				break;
+			case INTEL_SUB0_EBX:
+				if (got_intel_sub0)
+					reg = &intel_sub0_ebx;
+				break;
+			case INTEL_SUB0_ECX:
+				if (got_intel_sub0)
+					reg = &intel_sub0_ecx;
+				break;
+			case AMD_ECX:
+				if (got_amd)
+					reg = &amd_ecx;
+				break;
+			case AMD_EDX:
+				if (got_amd)
+					reg = &amd_edx;
+				break;
+			case VIA_EDX:
+				if (got_centaur)
+					reg = &centaur_edx;
+				break;
+			case CHECK_SENTINEL:
+				assert(0 && "CHECK_SENTINEL reached");
+			case CHECK_MAX:
+				assert(0 && "CHECK_MAX reached");
+		}
+		assert(flags[i].type <= CHECK_MAX);
 
-			switch (flags[i].checks[j].type)
-			{
-				case INTEL_ECX:
-					if (got_intel)
-						reg = &intel_ecx;
-					break;
-				case INTEL_EDX:
-					if (got_intel)
-						reg = &intel_edx;
-					break;
-				case INTEL_SUB0_EBX:
-					if (got_intel_sub0)
-						reg = &intel_sub0_ebx;
-					break;
-				case INTEL_SUB0_ECX:
-					if (got_intel_sub0)
-						reg = &intel_sub0_ecx;
-					break;
-				case AMD_ECX:
-					if (got_amd)
-						reg = &amd_ecx;
-					break;
-				case AMD_EDX:
-					if (got_amd)
-						reg = &amd_edx;
-					break;
-				case VIA_EDX:
-					if (got_centaur)
-						reg = &centaur_edx;
-					break;
-				case CHECK_SENTINEL:
-					assert(0 && "CHECK_SENTINEL reached");
-				case CHECK_MAX:
-					assert(0 && "CHECK_MAX reached");
-			}
-			assert(flags[i].checks[j].type <= CHECK_MAX);
-
-			if (reg)
-			{
-				if ((*reg & flags[i].checks[j].mask) == flags[i].checks[j].mask)
-					match = 1;
-			}
-
-			if (match)
+		if (reg)
+		{
+			if ((*reg & flags[i].mask) == flags[i].mask)
 			{
 				if (strcmp(last, flags[i].name))
 				{
@@ -176,7 +164,6 @@ int print_flags()
 
 					last = flags[i].name;
 				}
-				break;
 			}
 		}
 	}

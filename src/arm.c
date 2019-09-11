@@ -91,60 +91,55 @@ enum check_type
 	CHECK_MAX
 };
 
-struct check_desc
-{
-	enum check_type type;
-	unsigned long mask;
-};
-
 struct flag_info
 {
 	const char* name;
-	struct check_desc checks[2];
+	enum check_type type;
+	unsigned long mask;
 };
 
 struct flag_info flags[] = {
 #ifndef __aarch64__
 	/* arm variant */
 	/* copied outta linux/arch/arm/include/uapi/asm/hwcap.h */
-	{ "edsp", {{ CHECK_HWCAP, (1 << 7) }} },
-	{ "iwmmxt", {{ CHECK_HWCAP, (1 << 9) }} },
-	{ "neon", {{ CHECK_HWCAP, (1 << 12) }} },
-	{ "thumb", {{ CHECK_HWCAP, (1 << 2) }} },
-	{ "vfp", {{ CHECK_HWCAP, (1 << 6) }} },
-	{ "vfpv3", {{ CHECK_HWCAP, (1 << 13) }} },
-	{ "vfpv4", {{ CHECK_HWCAP, (1 << 16) }} },
-	{ "vfp-d32", {{ CHECK_HWCAP, (1 << 19) }} },
-	{ "aes", {{ CHECK_HWCAP2, (1 << 0) }} },
-	{ "sha1", {{ CHECK_HWCAP2, (1 << 2) }} },
-	{ "sha2", {{ CHECK_HWCAP2, (1 << 3) }} },
-	{ "crc32", {{ CHECK_HWCAP2, (1 << 4) }} },
+	{ "edsp", CHECK_HWCAP, (1 << 7) },
+	{ "iwmmxt", CHECK_HWCAP, (1 << 9) },
+	{ "neon", CHECK_HWCAP, (1 << 12) },
+	{ "thumb", CHECK_HWCAP, (1 << 2) },
+	{ "vfp", CHECK_HWCAP, (1 << 6) },
+	{ "vfpv3", CHECK_HWCAP, (1 << 13) },
+	{ "vfpv4", CHECK_HWCAP, (1 << 16) },
+	{ "vfp-d32", CHECK_HWCAP, (1 << 19) },
+	{ "aes", CHECK_HWCAP2, (1 << 0) },
+	{ "sha1", CHECK_HWCAP2, (1 << 2) },
+	{ "sha2", CHECK_HWCAP2, (1 << 3) },
+	{ "crc32", CHECK_HWCAP2, (1 << 4) },
 #endif
 
 	/* aarch64 variant */
 	/* copied outta linux/arch/arm64/include/uapi/asm/hwcap.h */
-	{ "edsp", {{ CHECK_SUBARCH, SUBARCH_V8 }} },
-	{ "neon", {{ CHECK_AARCH64_HWCAP, (1 << 1) }} }, /* HWCAP_ASIMD */
-	{ "thumb", {{ CHECK_SUBARCH, SUBARCH_V8 }} },
-	{ "vfp", {{ CHECK_SUBARCH, SUBARCH_V8 }} },
-	{ "vfpv3", {{ CHECK_SUBARCH, SUBARCH_V8 }} },
-	{ "vfpv4", {{ CHECK_SUBARCH, SUBARCH_V8 }} },
-	{ "vfp-d32", {{ CHECK_SUBARCH, SUBARCH_V8 }} },
-	{ "aes", {{ CHECK_AARCH64_HWCAP, (1 << 3) }} },
-	{ "sha1", {{ CHECK_AARCH64_HWCAP, (1 << 5) }} },
-	{ "sha2", {{ CHECK_AARCH64_HWCAP, (1 << 6) }} },
-	{ "crc32", {{ CHECK_AARCH64_HWCAP, (1 << 7) }} },
+	{ "edsp", CHECK_SUBARCH, SUBARCH_V8 },
+	{ "neon", CHECK_AARCH64_HWCAP, (1 << 1) }, /* HWCAP_ASIMD */
+	{ "thumb", CHECK_SUBARCH, SUBARCH_V8 },
+	{ "vfp", CHECK_SUBARCH, SUBARCH_V8 },
+	{ "vfpv3", CHECK_SUBARCH, SUBARCH_V8 },
+	{ "vfpv4", CHECK_SUBARCH, SUBARCH_V8 },
+	{ "vfp-d32", CHECK_SUBARCH, SUBARCH_V8 },
+	{ "aes", CHECK_AARCH64_HWCAP, (1 << 3) },
+	{ "sha1", CHECK_AARCH64_HWCAP, (1 << 5) },
+	{ "sha2", CHECK_AARCH64_HWCAP, (1 << 6) },
+	{ "crc32", CHECK_AARCH64_HWCAP, (1 << 7) },
 
 	/* subarches */
-	{ "v4", {{ CHECK_SUBARCH, SUBARCH_V4 }} },
-	{ "v5", {{ CHECK_SUBARCH, SUBARCH_V5 }} },
-	{ "v6", {{ CHECK_SUBARCH, SUBARCH_V6 }} },
-	{ "v7", {{ CHECK_SUBARCH, SUBARCH_V7 }} },
-	{ "v8", {{ CHECK_SUBARCH, SUBARCH_V8 }} },
+	{ "v4", CHECK_SUBARCH, SUBARCH_V4 },
+	{ "v5", CHECK_SUBARCH, SUBARCH_V5 },
+	{ "v6", CHECK_SUBARCH, SUBARCH_V6 },
+	{ "v7", CHECK_SUBARCH, SUBARCH_V7 },
+	{ "v8", CHECK_SUBARCH, SUBARCH_V8 },
 
 	/* other bits */
 	/* TODO: figure out how to detect it better? */
-	{ "thumb2", {{ CHECK_SUBARCH, SUBARCH_V6T2 }} },
+	{ "thumb2", CHECK_SUBARCH, SUBARCH_V6T2 },
 
 	{ 0 }
 };
@@ -158,7 +153,7 @@ int print_flags()
 {
 	unsigned long hwcap, hwcap2, subarch = 0;
 	struct utsname uname_res;
-	int i, j;
+	int i;
 
 	hwcap = get_hwcap();
 	hwcap2 = get_hwcap2();
@@ -196,49 +191,40 @@ int print_flags()
 
 	for (i = 0; flags[i].name; ++i)
 	{
-		for (j = 0; flags[i].checks[j].type != 0; ++j)
+		unsigned long* reg = 0;
+
+		switch (flags[i].type)
 		{
-			int match = 0;
-			unsigned long* reg = 0;
-
-			switch (flags[i].checks[j].type)
-			{
 #ifndef __aarch64__
-				case CHECK_HWCAP:
-					if (subarch < SUBARCH_V8)
-						reg = &hwcap;
-					break;
-				case CHECK_HWCAP2:
-					if (subarch < SUBARCH_V8)
-						reg = &hwcap2;
-					break;
+			case CHECK_HWCAP:
+				if (subarch < SUBARCH_V8)
+					reg = &hwcap;
+				break;
+			case CHECK_HWCAP2:
+				if (subarch < SUBARCH_V8)
+					reg = &hwcap2;
+				break;
 #endif
-				case CHECK_AARCH64_HWCAP:
-					if (subarch >= SUBARCH_V8)
-						reg = &hwcap;
-					break;
-				case CHECK_SUBARCH:
-					reg = &subarch;
-					break;
-				case CHECK_SENTINEL:
-					assert(0 && "CHECK_SENTINEL reached");
-				case CHECK_MAX:
-					assert(0 && "CHECK_MAX reached");
-			}
-			assert(flags[i].checks[j].type <= CHECK_MAX);
+			case CHECK_AARCH64_HWCAP:
+				if (subarch >= SUBARCH_V8)
+					reg = &hwcap;
+				break;
+			case CHECK_SUBARCH:
+				reg = &subarch;
+				break;
+			case CHECK_SENTINEL:
+				assert(0 && "CHECK_SENTINEL reached");
+			case CHECK_MAX:
+				assert(0 && "CHECK_MAX reached");
+		}
+		assert(flags[i].type <= CHECK_MAX);
 
-			if (reg)
-			{
-				if ((*reg & flags[i].checks[j].mask) == flags[i].checks[j].mask)
-					match = 1;
-			}
-
-			if (match)
+		if (reg)
+		{
+			if ((*reg & flags[i].mask) == flags[i].mask)
 			{
 				fputc(' ', stdout);
 				fputs(flags[i].name, stdout);
-
-				break;
 			}
 		}
 	}
