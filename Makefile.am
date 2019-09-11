@@ -46,8 +46,11 @@ x86_mock_CPPFLAGS = -DCPUID_X86 -DCPUID_MOCK
 
 LOG_COMPILER = sh $(top_srcdir)/tests/test.sh $(builddir)
 TESTS = \
+	tests/arm/aarch64-aws-a1.txt \
+	tests/arm/aarch64-raspberry-4.txt \
 	tests/arm/armv7l-beaglebone.txt \
 	tests/arm/armv7l-rk3288.txt \
+	tests/arm/armv7l-scaleway-c1.txt \
 	tests/ppc/power8.txt \
 	tests/ppc/power9.txt \
 	tests/x86/amd-colfax.txt \
