@@ -1,4 +1,4 @@
-/* cpuid2cpuflags
+/* cpuid2cpuflags -- dumping tool for AT_HWCAP*
  * (c) 2015-2019 Michał Górny
  * 2-clause BSD licensed
  */
@@ -17,6 +17,9 @@
 
 #include "hwcap.h"
 
+/**
+ * Prints AT_HWCAP* dump suitable for mocking tests.
+ */
 int main(int argc, char* argv[])
 {
 	unsigned long val = 0;

@@ -1,4 +1,4 @@
-/* cpuid2cpuflags
+/* cpuid2cpuflags -- X86 CPUID native getter
  * (c) 2015-2019 Michał Górny
  * 2-clause BSD licensed
  */
@@ -18,6 +18,12 @@
 
 #include "x86.h"
 
+/**
+ * Run native CPUID for specified level, and fill passed register
+ * variables (where not NULL).
+ *
+ * Returns 1 on sucess, 0 if not supported by the CPU.
+ */
 int run_cpuid(uint32_t level, uint32_t* eax, uint32_t* ebx, uint32_t* ecx, uint32_t* edx)
 {
 	uint32_t eax_, ebx_, ecx_, edx_;
@@ -42,6 +48,12 @@ int run_cpuid(uint32_t level, uint32_t* eax, uint32_t* ebx, uint32_t* ecx, uint3
 	return 1;
 }
 
+/**
+ * Run native CPUID for specified level and subleaf, and fill passed
+ * register variables (where not NULL).
+ *
+ * Returns 1 on sucess, 0 if not supported by the CPU.
+ */
 int run_cpuid_sub(uint32_t level, uint32_t sublevel, uint32_t* eax, uint32_t* ebx, uint32_t* ecx, uint32_t* edx)
 {
 	uint32_t eax_, ebx_, ecx_, edx_;

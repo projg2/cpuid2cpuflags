@@ -1,5 +1,5 @@
-/* cpuid2cpuflags
- * (c) 2015-2016 Michał Górny
+/* cpuid2cpuflags -- X86-specific detection routines
+ * (c) 2015-2019 Michał Górny
  * 2-clause BSD licensed
  */
 
@@ -19,6 +19,14 @@
 
 #include "x86.h"
 
+/**
+ * Supported checks:
+ *
+ * - INTEL_{ECX,EDX} -- registers of 0x00000001 CPUID.
+ * - INTEL_SUB0_{EBX,ECX} -- registers of 0x00000007 / leaf 0 CPUID.
+ * - AMD_{ECX,EDX} -- registers of 0x80000001 CPUID.
+ * - VIA_EDX -- register of 0xC0000001 CPUID.
+ */
 enum check_type
 {
 	CHECK_SENTINEL = 0,
@@ -82,6 +90,11 @@ struct flag_info flags[] = {
 	{ 0 }
 };
 
+/**
+ * Print CPU_FLAGS_X86 based on CPUID.
+ *
+ * Returns exit status (0 on success, non-zero on failure).
+ */
 int print_flags()
 {
 	uint32_t intel_ecx = 0, intel_edx = 0, intel_sub0_ebx = 0, intel_sub0_ecx = 0;

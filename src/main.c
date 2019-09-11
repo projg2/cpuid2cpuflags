@@ -1,5 +1,5 @@
-/* cpuid2cpuflags
- * (c) 2015-2017 Michał Górny
+/* cpuid2cpuflags -- main program (mostly option parsing)
+ * (c) 2015-2019 Michał Górny
  * 2-clause BSD licensed
  */
 

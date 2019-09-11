@@ -1,4 +1,4 @@
-/* cpuid2cpuflags
+/* cpuid2cpuflags -- X86 CPUID routine prototypes
  * (c) 2015-2019 Michał Górny
  * 2-clause BSD licensed
  */

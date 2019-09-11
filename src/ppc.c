@@ -1,5 +1,5 @@
-/* cpuid2cpuflags
- * (c) 2015-2017 Michał Górny
+/* cpuid2cpuflags -- PowerPC-specific detection routines
+ * (c) 2015-2019 Michał Górny
  * (c) 2019 Georgy Yakovlev
  * (c) 2019 Shawn Anastasio
  * 2-clause BSD licensed
@@ -21,6 +21,11 @@
 
 #include "hwcap.h"
 
+/**
+ * Supported checks:
+ *
+ * - CHECK_HWCAP and CHECK_HWCAP2 refer to appropriate AT_HWCAP* values.
+ */
 enum check_type
 {
 	CHECK_SENTINEL = 0,
@@ -52,6 +57,11 @@ struct flag_info flags[] = {
 	{ 0 }
 };
 
+/**
+ * Print CPU_FLAGS_PPC based on AT_HWCAP*.
+ *
+ * Returns exit status (0 on success, non-zero on failure).
+ */
 int print_flags()
 {
 	unsigned long hwcap = 0, hwcap2 = 0;

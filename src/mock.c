@@ -1,4 +1,4 @@
-/* cpuid2cpuflags
+/* cpuid2cpuflags -- mocked routines for tests
  * (c) 2015-2019 Michał Górny
  * 2-clause BSD licensed
  */
@@ -23,6 +23,12 @@ int print_flags();
 
 FILE* mocked_regs_f;
 
+/**
+ * Get CPUID value from mocked test description for specified level
+ * and fill passed register variables (where not NULL).
+ *
+ * Returns 1 on sucess, 0 if not present.
+ */
 int run_cpuid(uint32_t level, uint32_t* eax, uint32_t* ebx, uint32_t* ecx, uint32_t* edx)
 {
 	rewind(mocked_regs_f);
@@ -62,6 +68,12 @@ int run_cpuid(uint32_t level, uint32_t* eax, uint32_t* ebx, uint32_t* ecx, uint3
 	return 0;
 }
 
+/**
+ * Get CPUID value from mocked test description for specified level
+ * and subleaf, and fill passed register variables (where not NULL).
+ *
+ * Returns 1 on sucess, 0 if not present.
+ */
 int run_cpuid_sub(uint32_t level, uint32_t sublevel, uint32_t* eax, uint32_t* ebx, uint32_t* ecx, uint32_t* edx)
 {
 	rewind(mocked_regs_f);
@@ -101,6 +113,9 @@ int run_cpuid_sub(uint32_t level, uint32_t sublevel, uint32_t* eax, uint32_t* eb
 	return 0;
 }
 
+/**
+ * Returns AT_HWCAP from mocked test description.
+ */
 unsigned long get_hwcap()
 {
 	rewind(mocked_regs_f);
@@ -130,6 +145,9 @@ unsigned long get_hwcap()
 	return 0;
 }
 
+/**
+ * Returns AT_HWCAP2 from mocked test description.
+ */
 unsigned long get_hwcap2()
 {
 	rewind(mocked_regs_f);

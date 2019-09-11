@@ -1,4 +1,4 @@
-/* cpuid2cpuflags
+/* cpuid2cpuflags -- platform detection
  * (c) 2015-2017 Michał Górny
  * 2-clause BSD licensed
  */

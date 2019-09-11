@@ -1,4 +1,4 @@
-/* cpuid2cpuflags
+/* cpuid2cpuflags -- X86 CPUID dumping tool
  * (c) 2015-2019 Michał Górny
  * 2-clause BSD licensed
  */
@@ -18,6 +18,9 @@
 
 #include "x86.h"
 
+/**
+ * Dump the value of specified CPUID level.
+ */
 void dump(uint32_t level)
 {
 	uint32_t eax, ebx, ecx, edx;
@@ -31,6 +34,9 @@ void dump(uint32_t level)
 				level, eax, ebx, ecx, edx);
 }
 
+/**
+ * Dump the value of specified CPUID level with subleaf.
+ */
 void dump_leaf(uint32_t level, uint32_t leaf)
 {
 	uint32_t eax, ebx, ecx, edx;
@@ -44,6 +50,9 @@ void dump_leaf(uint32_t level, uint32_t leaf)
 				level, leaf, eax, ebx, ecx, edx);
 }
 
+/**
+ * Prints CPUID dump suitable for mocking tests.
+ */
 int main(int argc, char* argv[])
 {
 #ifdef CPUID_X86

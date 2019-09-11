@@ -1,4 +1,4 @@
-/* cpuid2cpuflags
+/* cpuid2cpuflags -- native AT_HWCAP* getters
  * (c) 2015-2019 Michał Górny
  * 2-clause BSD licensed
  */
@@ -23,11 +23,17 @@
 
 #include "hwcap.h"
 
+/**
+ * Returns native AT_HWCAP value.
+ */
 unsigned long get_hwcap()
 {
 	return getauxval(AT_HWCAP);
 }
 
+/**
+ * Returns native AT_HWCAP2 value.
+ */
 unsigned long get_hwcap2()
 {
 #ifdef AT_HWCAP2

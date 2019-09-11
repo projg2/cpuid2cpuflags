@@ -1,5 +1,5 @@
-/* cpuid2cpuflags
- * (c) 2015-2017 Michał Górny
+/* cpuid2cpuflags -- ARM/AArch64-specific detection routines
+ * (c) 2015-2019 Michał Górny
  * 2-clause BSD licensed
  */
 
@@ -20,6 +20,12 @@
 
 #include "hwcap.h"
 
+/**
+ * Definition of ARM subarches (vN) as bitmaps indicating which v* flags
+ * should be enabled.  Generally, we expect every next subarch to
+ * be represented by the next bit, and to imply all previous subarches
+ * (i.e. be compatible with).
+ */
 enum cpu_subarch
 {
 	SUBARCH_V4 = (1 << 0),
@@ -36,6 +42,9 @@ enum cpu_subarch
 	SUBARCH_MAX
 };
 
+/**
+ * Mapping of 'uname -m' value to subarch.
+ */
 struct subarch_info
 {
 	const char* name;
@@ -59,6 +68,15 @@ struct subarch_info subarches[] = {
 	{ 0 }
 };
 
+/**
+ * Supported checks:
+ *
+ * - CHECK_HWCAP and CHECK_HWCAP2 refer to appropriate values in 32-bit
+ *   ARM AT_HWCAP*,
+ * - CHECK_AARCH64_HWCAP refer to appropriate values in 64-bit AArch64
+ *   AT_HWCAP,
+ * - CHECK_SUBARCH refers to the subarch determined via 'uname -m'.
+ */
 enum check_type
 {
 	CHECK_SENTINEL = 0,
@@ -131,6 +149,11 @@ struct flag_info flags[] = {
 	{ 0 }
 };
 
+/**
+ * Print CPU_FLAGS_ARM based on AT_HWCAP* and 'uname -m'.
+ *
+ * Returns exit status (0 on success, non-zero on failure).
+ */
 int print_flags()
 {
 	unsigned long hwcap, hwcap2, subarch = 0;
