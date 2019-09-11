@@ -52,6 +52,7 @@ TESTS = \
 	tests/arm/armv7l-beaglebone.txt \
 	tests/arm/armv7l-rk3288.txt \
 	tests/arm/armv7l-scaleway-c1.txt \
+	tests/arm/armv7l-solidrun-cubox.txt \
 	tests/ppc/power8.txt \
 	tests/ppc/power9.txt \
 	tests/x86/amd-colfax.txt \

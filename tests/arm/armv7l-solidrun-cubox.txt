@@ -1,0 +1,4 @@
+expected:edsp iwmmxt thumb vfp vfpv3 v4 v5 v6 v7 thumb2
+hwcap:000000000004ead6
+hwcap2:0000000000000000
+machine:armv7l
