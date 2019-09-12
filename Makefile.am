@@ -47,10 +47,14 @@ x86_mock_CPPFLAGS = -DCPUID_X86 -DCPUID_MOCK
 LOG_COMPILER = sh $(top_srcdir)/tests/test.sh $(builddir)
 TESTS = \
 	tests/arm/aarch64-aws-a1.txt \
+	tests/arm/aarch64-dragonboard.txt \
 	tests/arm/aarch64-odroid-n2.txt \
 	tests/arm/aarch64-raspberry-4.txt \
 	tests/arm/armv7l-beaglebone.txt \
 	tests/arm/armv7l-compulab-utilite-pro.txt \
+	tests/arm/armv7l-jhcloos-cheap.txt \
+	tests/arm/armv7l-odroid-c1.txt \
+	tests/arm/armv7l-raspberry-pi3.txt \
 	tests/arm/armv7l-rk3288.txt \
 	tests/arm/armv7l-scaleway-c1.txt \
 	tests/arm/armv7l-solidrun-cubox.txt \

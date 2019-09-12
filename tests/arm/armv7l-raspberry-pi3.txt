@@ -1,0 +1,4 @@
+expected:edsp neon thumb vfp vfpv3 vfpv4 vfp-d32 crc32 v4 v5 v6 v7 thumb2
+hwcap:00000000003fb0d6
+hwcap2:0000000000000010
+machine:armv7l
