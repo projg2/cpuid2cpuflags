@@ -1,0 +1,4 @@
+expected:edsp thumb v4 v5
+hwcap:0000000000000097
+hwcap2:0000000000000000
+machine:armv5tel
