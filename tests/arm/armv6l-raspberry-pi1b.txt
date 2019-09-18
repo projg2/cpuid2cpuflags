@@ -1,0 +1,4 @@
+expected:edsp thumb vfp v4 v5 v6
+hwcap:00000000000081d6
+hwcap2:0000000000000000
+machine:armv6l
