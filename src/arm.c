@@ -54,7 +54,6 @@ struct subarch_info subarches[] = {
 	/* grep -Rho string.*cpu_arch_name.*$ arch/arm | sort -u */
 	/* start with newest as the most likely */
 	{ "aarch64", SUBARCH_V8 },
-#ifndef __aarch64__
 	{ "armv7", SUBARCH_V7 },
 	{ "armv6", SUBARCH_V6 },
 	{ "armv5tej", SUBARCH_V5TEJ },
@@ -62,7 +61,6 @@ struct subarch_info subarches[] = {
 	{ "armv5t", SUBARCH_V5T },
 	{ "armv4t", SUBARCH_V4T },
 	{ "armv4", SUBARCH_V4 },
-#endif
 
 	{ 0 }
 };
@@ -80,10 +78,8 @@ enum check_type
 {
 	CHECK_SENTINEL = 0,
 
-#ifndef __aarch64__
 	CHECK_HWCAP,
 	CHECK_HWCAP2,
-#endif
 	CHECK_AARCH64_HWCAP,
 	CHECK_SUBARCH,
 
@@ -98,7 +94,6 @@ struct flag_info
 };
 
 struct flag_info flags[] = {
-#ifndef __aarch64__
 	/* arm variant */
 	/* copied outta linux/arch/arm/include/uapi/asm/hwcap.h */
 	{ "edsp", CHECK_HWCAP, (1 << 7) },
@@ -113,7 +108,6 @@ struct flag_info flags[] = {
 	{ "sha1", CHECK_HWCAP2, (1 << 2) },
 	{ "sha2", CHECK_HWCAP2, (1 << 3) },
 	{ "crc32", CHECK_HWCAP2, (1 << 4) },
-#endif
 
 	/* aarch64 variant */
 	/* copied outta linux/arch/arm64/include/uapi/asm/hwcap.h */
@@ -194,7 +188,6 @@ int print_flags()
 
 		switch (flags[i].type)
 		{
-#ifndef __aarch64__
 			case CHECK_HWCAP:
 				if (subarch < SUBARCH_V8)
 					reg = &hwcap;
@@ -203,7 +196,6 @@ int print_flags()
 				if (subarch < SUBARCH_V8)
 					reg = &hwcap2;
 				break;
-#endif
 			case CHECK_AARCH64_HWCAP:
 				if (subarch >= SUBARCH_V8)
 					reg = &hwcap;
