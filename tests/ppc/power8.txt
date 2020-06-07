@@ -1,3 +1,3 @@
-expected:altivec vsx
+expected:altivec vsx vsx2
 hwcap:00000000dc0065c2
 hwcap2:00000000be000000
