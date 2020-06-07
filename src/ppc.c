@@ -47,6 +47,8 @@ struct flag_info flags[] = {
 	{ "altivec", CHECK_HWCAP, 0x10000000 },
 	/* PPC_FEATURE_HAS_VSX */
 	{ "vsx", CHECK_HWCAP, 0x00000080 },
+	/* PPC_FEATURE2_ARCH_2_07 */
+	{ "vsx2", CHECK_HWCAP2, 0x80000000 },
 	/* PPC_FEATURE2_ARCH_3_00 */
 	{ "vsx3", CHECK_HWCAP2, 0x00800000 },
 	{ 0 }
