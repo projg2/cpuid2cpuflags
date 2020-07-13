@@ -1,5 +1,5 @@
 AC_PREREQ([2.60])
-AC_INIT([cpuid2cpuflags], [10])
+AC_INIT([cpuid2cpuflags], [11])
 AC_CONFIG_AUX_DIR([build-aux])
 AC_CONFIG_MACRO_DIR([m4])
 AM_INIT_AUTOMAKE([1.9 foreign dist-bzip2 parallel-tests subdir-objects -Wall])
