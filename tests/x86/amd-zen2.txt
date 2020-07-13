@@ -1,0 +1,4 @@
+expected:aes avx avx2 f16c fma3 mmx mmxext pclmul popcnt rdrand sha sse sse2 sse3 sse4_1 sse4_2 sse4a ssse3
+top:00000001:00870f10:050c0800:7ed8320b:178bfbff
+sub:00000007:00000000:00000000:219c91a9:00400004:00000000
+top:80000001:00870f10:20000000:75c237ff:2fd3fbff

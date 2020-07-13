@@ -66,6 +66,7 @@ TESTS = \
 	tests/ppc/power8.txt \
 	tests/ppc/power9.txt \
 	tests/x86/amd-colfax.txt \
+	tests/x86/amd-zen2.txt \
 	tests/x86/athlon64-windsor.txt \
 	tests/x86/i3-ivybridge.txt \
 	tests/x86/opteron-6272.txt \
