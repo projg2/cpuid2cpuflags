@@ -73,6 +73,7 @@ struct flag_info flags[] = {
 	{ "pclmul", INTEL_ECX, (1 << 1) },
 	{ "popcnt", INTEL_ECX, (1 << 23) }, /* Intel */
 	{ "popcnt", AMD_ECX, (1 << 5) }, /* ABM on AMD; XXX: manuals say it's LZCNT */
+	{ "rdrand", INTEL_ECX, (1 << 30) },
 	{ "sha", INTEL_SUB0_EBX, (1 << 29) },
 	{ "sse", INTEL_EDX, (1 << 25) },
 	{ "sse2", INTEL_EDX, (1 << 26) },
