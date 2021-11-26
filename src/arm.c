@@ -17,6 +17,8 @@
 #endif
 #include <assert.h>
 
+#include <stdbool.h>
+extern bool quiet;
 #include "hwcap.h"
 
 /**
@@ -142,7 +144,7 @@ struct flag_info flags[] = {
  *
  * Returns exit status (0 on success, non-zero on failure).
  */
-int print_flags()
+int print_flags( bool quiet )
 {
 	unsigned long hwcap, hwcap2, subarch = 0;
 	char* uname_m;
@@ -180,7 +182,10 @@ int print_flags()
 		return 1;
 	}
 
-	fputs("CPU_FLAGS_ARM:", stdout);
+    if (!quiet)
+    {
+        fputs("CPU_FLAGS_ARM:", stdout);
+    }
 
 	for (i = 0; flags[i].name; ++i)
 	{

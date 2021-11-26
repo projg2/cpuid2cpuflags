@@ -11,11 +11,14 @@
 #include <getopt.h>
 #include <stdio.h>
 
-int print_flags();
+#include <stdbool.h>
+bool quiet = false;
+int print_flags(bool quiet);
 
 struct option long_options[] = {
 	{ "help", no_argument, 0, 'h' },
 	{ "version", no_argument, 0, 'V' },
+    { "quiet", no_argument, 0, 'q' },
 	{ 0, 0, 0, 0 }
 };
 
@@ -23,13 +26,14 @@ const char* usage = "Usage: %s [options]\n"
 	"\n"
 	"Options:\n"
 	"  -h, --help               print this help message\n"
-	"  -V, --version            print program version\n";
+	"  -V, --version            print program version\n"
+    "  -q, --quiet              make output easily pipeable, remove cpu type\n";
 
 int main(int argc, char* argv[])
 {
 	int opt;
 
-	while ((opt = getopt_long(argc, argv, "hV", long_options, 0)) != -1)
+	while ((opt = getopt_long(argc, argv, "hVq", long_options, 0)) != -1)
 	{
 		switch (opt)
 		{
@@ -39,17 +43,19 @@ int main(int argc, char* argv[])
 			case 'V':
 				puts(PACKAGE_STRING);
 				return 0;
+            case 'q':
+                quiet = true; //TODO this doesn't work?
+                return print_flags(quiet);
 			case '?':
 				fprintf(stderr, usage, argv[0]);
 				return 1;
 		}
 	}
-	if (optind != argc)
-	{
-		fprintf(stderr, "%s: unexpected position parameter\n", argv[0]);
-		fprintf(stderr, usage, argv[0]);
-		return 1;
-	}
-
-	return print_flags();
+    if (optind != argc)
+    {
+        fprintf(stderr, "%s: unexpected position parameter\n", argv[0]);
+        fprintf(stderr, usage, argv[0]);
+        return 1;
+    }
+    return print_flags(quiet);
 }
