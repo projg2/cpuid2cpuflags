@@ -20,7 +20,7 @@
 #include <sys/utsname.h>
 #endif
 
-#ifndef HAVE_GETAUXVAL
+#ifdef __FreeBSD__
 static unsigned long getauxval(int aux)
 {
 	unsigned long auxval = 0;
