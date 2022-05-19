@@ -1,5 +1,5 @@
 /* cpuid2cpuflags -- X86 CPUID native getter
- * (c) 2015-2019 Michał Górny
+ * (c) 2015-2022 Michał Górny
  * 2-clause BSD licensed
  */
 
@@ -10,11 +10,7 @@
 
 #ifdef CPUID_X86
 
-#ifdef HAVE_CPUID_H
-#	include <cpuid.h>
-#else
-#	error "Compiler not supported (no cpuid.h)"
-#endif
+#include <cpuid.h>
 
 #include "x86.h"
 
