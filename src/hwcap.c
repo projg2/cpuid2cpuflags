@@ -11,9 +11,7 @@
 #if defined(CPUID_ARM) || defined(CPUID_PPC)
 
 #include <stddef.h>
-#ifdef HAVE_SYS_AUXV_H
-#	include <sys/auxv.h>
-#endif
+#include <sys/auxv.h>
 #ifdef __FreeBSD__
 #	include <sys/sysctl.h>
 #else
