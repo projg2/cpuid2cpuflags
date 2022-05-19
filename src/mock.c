@@ -1,5 +1,5 @@
 /* cpuid2cpuflags -- mocked routines for tests
- * (c) 2015-2019 Michał Górny
+ * (c) 2015-2022 Michał Górny
  * 2-clause BSD licensed
  */
 
@@ -9,12 +9,8 @@
 
 #include <assert.h>
 #include <stdio.h>
-#ifdef HAVE_INTTYPES_H
-#	include <inttypes.h>
-#endif
-#ifdef HAVE_STDINT_H
-#	include <stdint.h>
-#endif
+#include <inttypes.h>
+#include <stdint.h>
 
 #include "x86.h"
 #include "hwcap.h"

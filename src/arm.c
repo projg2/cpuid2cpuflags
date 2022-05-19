@@ -1,5 +1,5 @@
 /* cpuid2cpuflags -- ARM/AArch64-specific detection routines
- * (c) 2015-2019 Michał Górny
+ * (c) 2015-2022 Michał Górny
  * 2-clause BSD licensed
  */
 
@@ -12,9 +12,7 @@
 
 #include <stdio.h>
 #include <string.h>
-#ifdef HAVE_STDINT_H
-#	include <stdint.h>
-#endif
+#include <stdint.h>
 #include <assert.h>
 
 #include "hwcap.h"

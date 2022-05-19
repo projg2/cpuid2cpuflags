@@ -9,7 +9,6 @@ m4_ifdef([AM_SILENT_RULES], [AM_SILENT_RULES])
 AC_PROG_CC
 AC_USE_SYSTEM_EXTENSIONS
 
-AC_TYPE_UINT32_T
 # TODO: skip this on non-x86?
 AC_CHECK_HEADERS([cpuid.h])
 # TODO: skip this on x86?
