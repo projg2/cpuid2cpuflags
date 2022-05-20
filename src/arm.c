@@ -111,6 +111,7 @@ struct flag_info flags[] = {
 
 	/* aarch64 variant */
 	/* copied outta linux/arch/arm64/include/uapi/asm/hwcap.h */
+	/* see also sys/arm64/include/elf.h in FreeBSD */
 	{ "edsp", CHECK_SUBARCH, SUBARCH_V8 },
 	{ "neon", CHECK_AARCH64_HWCAP, (1 << 1) }, /* HWCAP_ASIMD */
 	{ "thumb", CHECK_SUBARCH, SUBARCH_V8 },
