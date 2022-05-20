@@ -1,5 +1,6 @@
 /* cpuid2cpuflags -- native AT_HWCAP* getters
  * (c) 2015-2019 Michał Górny
+ * (c) 2022 Alexey Dokuchaev
  * 2-clause BSD licensed
  */
 
