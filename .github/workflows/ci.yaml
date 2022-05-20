@@ -1,0 +1,14 @@
+name: CI
+on: [push, pull_request]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Autoreconf
+        run: autoreconf -vi
+      - name: Configure
+        run: ./configure -C
+      - name: Distcheck
+        run: make -j$(nproc) distcheck
