@@ -125,6 +125,7 @@ struct flag_info flags[] = {
 	{ "sha1", CHECK_AARCH64_HWCAP, (1 << 5) },
 	{ "sha2", CHECK_AARCH64_HWCAP, (1 << 6) },
 	{ "crc32", CHECK_AARCH64_HWCAP, (1 << 7) },
+	{ "sm4", CHECK_AARCH64_HWCAP, (1 << 19) },
 
 	/* subarches */
 	{ "v4", CHECK_SUBARCH, SUBARCH_V4 },
