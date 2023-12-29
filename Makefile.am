@@ -51,6 +51,7 @@ TESTS = \
 	tests/arm/aarch64-cavium-thunderx2.txt \
 	tests/arm/aarch64-dragonboard.txt \
 	tests/arm/aarch64-hp-moonshot-xgene-1.txt \
+	tests/arm/aarch64-neoverse-n1.txt \
 	tests/arm/aarch64-odroid-n2.txt \
 	tests/arm/aarch64-raspberry-4.txt \
 	tests/arm/armv5tel-dreamplug.txt \
@@ -63,6 +64,7 @@ TESTS = \
 	tests/arm/armv7l-rk3288.txt \
 	tests/arm/armv7l-scaleway-c1.txt \
 	tests/arm/armv7l-solidrun-cubox.txt \
+	tests/arm/armv8l-neoverse-n1.txt \
 	tests/ppc/power8.txt \
 	tests/ppc/power9.txt \
 	tests/x86/amd-colfax.txt \
