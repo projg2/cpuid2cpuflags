@@ -106,6 +106,7 @@ struct flag_info flags[] = {
 	{ "vfpv3", CHECK_HWCAP, (1 << 13) },
 	{ "vfpv4", CHECK_HWCAP, (1 << 16) },
 	{ "vfp-d32", CHECK_HWCAP, (1 << 19) },
+	{ "asimddp", CHECK_HWCAP, (1 << 24) },
 	{ "aes", CHECK_HWCAP2, (1 << 0) },
 	{ "sha1", CHECK_HWCAP2, (1 << 2) },
 	{ "sha2", CHECK_HWCAP2, (1 << 3) },
@@ -126,6 +127,7 @@ struct flag_info flags[] = {
 	{ "sha2", CHECK_AARCH64_HWCAP, (1 << 6) },
 	{ "crc32", CHECK_AARCH64_HWCAP, (1 << 7) },
 	{ "sm4", CHECK_AARCH64_HWCAP, (1 << 19) },
+	{ "asimddp", CHECK_AARCH64_HWCAP, (1 << 20) },
 
 	/* subarches */
 	{ "v4", CHECK_SUBARCH, SUBARCH_V4 },
