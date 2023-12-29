@@ -72,8 +72,8 @@ struct subarch_info subarches[] = {
  *
  * - CHECK_HWCAP and CHECK_HWCAP2 refer to appropriate values in 32-bit
  *   ARM AT_HWCAP*,
- * - CHECK_AARCH64_HWCAP refer to appropriate values in 64-bit AArch64
- *   AT_HWCAP,
+ * - CHECK_AARCH64_HWCAP and CHECK_HWCAP2 refer to appropriate values
+ *   in 64-bit AArch64 AT_HWCAP,
  * - CHECK_SUBARCH refers to the subarch determined via 'uname -m'.
  */
 enum check_type
@@ -83,6 +83,7 @@ enum check_type
 	CHECK_HWCAP,
 	CHECK_HWCAP2,
 	CHECK_AARCH64_HWCAP,
+	CHECK_AARCH64_HWCAP2,
 	CHECK_SUBARCH,
 
 	CHECK_MAX
@@ -107,6 +108,7 @@ struct flag_info flags[] = {
 	{ "vfpv4", CHECK_HWCAP, (1 << 16) },
 	{ "vfp-d32", CHECK_HWCAP, (1 << 19) },
 	{ "asimddp", CHECK_HWCAP, (1 << 24) },
+	{ "i8mm", CHECK_HWCAP, (1 << 27) },
 	{ "aes", CHECK_HWCAP2, (1 << 0) },
 	{ "sha1", CHECK_HWCAP2, (1 << 2) },
 	{ "sha2", CHECK_HWCAP2, (1 << 3) },
@@ -128,6 +130,7 @@ struct flag_info flags[] = {
 	{ "crc32", CHECK_AARCH64_HWCAP, (1 << 7) },
 	{ "sm4", CHECK_AARCH64_HWCAP, (1 << 19) },
 	{ "asimddp", CHECK_AARCH64_HWCAP, (1 << 20) },
+	{ "i8mm", CHECK_AARCH64_HWCAP2, (1 << 13) },
 
 	/* subarches */
 	{ "v4", CHECK_SUBARCH, SUBARCH_V4 },
@@ -205,6 +208,10 @@ int print_flags()
 			case CHECK_AARCH64_HWCAP:
 				if (subarch >= SUBARCH_AARCH64)
 					reg = &hwcap;
+				break;
+			case CHECK_AARCH64_HWCAP2:
+				if (subarch >= SUBARCH_AARCH64)
+					reg = &hwcap2;
 				break;
 			case CHECK_SUBARCH:
 				reg = &subarch;
