@@ -55,24 +55,24 @@ struct flag_info flags[] = {
 	{ "aes", INTEL_ECX, (1 << 25) },
 	{ "avx", INTEL_ECX, (1 << 28) },
 	{ "avx2", INTEL_SUB0_EBX, (1 << 5) },
-	{ "avx512f", INTEL_SUB0_EBX, (1 << 16) },
-	{ "avx512dq", INTEL_SUB0_EBX, (1 << 17) },
-	{ "avx512pf", INTEL_SUB0_EBX, (1 << 26) },
-	{ "avx512er", INTEL_SUB0_EBX, (1 << 27) },
-	{ "avx512cd", INTEL_SUB0_EBX, (1 << 28) },
 	{ "avx512bw", INTEL_SUB0_EBX, (1 << 30) },
-	{ "avx512vl", INTEL_SUB0_EBX, (1 << 31) },
+	{ "avx512cd", INTEL_SUB0_EBX, (1 << 28) },
+	{ "avx512dq", INTEL_SUB0_EBX, (1 << 17) },
+	{ "avx512er", INTEL_SUB0_EBX, (1 << 27) },
+	{ "avx512f", INTEL_SUB0_EBX, (1 << 16) },
+	{ "avx512pf", INTEL_SUB0_EBX, (1 << 26) },
 	{ "avx512vbmi", INTEL_SUB0_ECX, (1 << 1) },
+	{ "avx512vl", INTEL_SUB0_EBX, (1 << 31) },
 	{ "f16c", INTEL_ECX, (1 << 29) },
 	{ "fma3", INTEL_ECX, (1 << 12) },
 	{ "fma4", AMD_ECX, (1 << 16) },
 	{ "mmx", INTEL_EDX, (1 << 23) },
-	{ "mmxext", INTEL_EDX, (1 << 25) }, /* implied by SSE on Intel */
 	{ "mmxext", AMD_EDX, (1 << 22) }, /* AMD */
+	{ "mmxext", INTEL_EDX, (1 << 25) }, /* implied by SSE on Intel */
 	{ "padlock", VIA_EDX, (1 << 10) }, /* PHE */
 	{ "pclmul", INTEL_ECX, (1 << 1) },
-	{ "popcnt", INTEL_ECX, (1 << 23) }, /* Intel */
 	{ "popcnt", AMD_ECX, (1 << 5) }, /* ABM on AMD; XXX: manuals say it's LZCNT */
+	{ "popcnt", INTEL_ECX, (1 << 23) }, /* Intel */
 	{ "rdrand", INTEL_ECX, (1 << 30) },
 	{ "sha", INTEL_SUB0_EBX, (1 << 29) },
 	{ "sse", INTEL_EDX, (1 << 25) },
