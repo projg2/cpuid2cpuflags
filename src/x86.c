@@ -35,6 +35,8 @@ enum check_type
 	INTEL_EDX,
 	INTEL_SUB0_EBX,
 	INTEL_SUB0_ECX,
+	INTEL_SUB0_EDX,
+	INTEL_SUB1_EAX,
 	AMD_ECX,
 	AMD_EDX,
 	VIA_EDX,
@@ -55,11 +57,21 @@ struct flag_info flags[] = {
 	{ "aes", INTEL_ECX, (1 << 25) },
 	{ "avx", INTEL_ECX, (1 << 28) },
 	{ "avx2", INTEL_SUB0_EBX, (1 << 5) },
+	{ "avx512_4fmaps", INTEL_SUB0_EDX, (1 << 3) },
+	{ "avx512_4vnniw", INTEL_SUB0_EDX, (1 << 2) },
+	{ "avx512_bf16", INTEL_SUB1_EAX, (1 << 5) },
+	{ "avx512_bitalg", INTEL_SUB0_ECX, (1 << 12) },
+	{ "avx512_fp16", INTEL_SUB0_EDX, (1 << 23) },
+	{ "avx512_vbmi2", INTEL_SUB0_ECX, (1 << 6) },
+	{ "avx512_vnni", INTEL_SUB0_ECX, (1 << 11) },
+	{ "avx512_vp2intersect", INTEL_SUB0_EDX, (1 << 8) },
+	{ "avx512_vpopcntdq", INTEL_SUB0_ECX, (1 << 14) },
 	{ "avx512bw", INTEL_SUB0_EBX, (1 << 30) },
 	{ "avx512cd", INTEL_SUB0_EBX, (1 << 28) },
 	{ "avx512dq", INTEL_SUB0_EBX, (1 << 17) },
 	{ "avx512er", INTEL_SUB0_EBX, (1 << 27) },
 	{ "avx512f", INTEL_SUB0_EBX, (1 << 16) },
+	{ "avx512ifma", INTEL_SUB0_EBX, (1 << 21) },
 	{ "avx512pf", INTEL_SUB0_EBX, (1 << 26) },
 	{ "avx512vbmi", INTEL_SUB0_ECX, (1 << 1) },
 	{ "avx512vl", INTEL_SUB0_EBX, (1 << 31) },
@@ -82,6 +94,7 @@ struct flag_info flags[] = {
 	{ "sse4_2", INTEL_ECX, (1 << 20) },
 	{ "sse4a", AMD_ECX, (1 << 6) },
 	{ "ssse3", INTEL_ECX, (1 << 9) },
+	{ "vpclmulqdq", INTEL_SUB0_ECX, (1 << 10) },
 	{ "xop", AMD_ECX, (1 << 11) },
 	{ 0 }
 };
@@ -93,11 +106,12 @@ struct flag_info flags[] = {
  */
 int print_flags()
 {
-	uint32_t intel_ecx = 0, intel_edx = 0, intel_sub0_ebx = 0, intel_sub0_ecx = 0;
+	uint32_t intel_ecx = 0, intel_edx = 0;
+	uint32_t intel_sub0_ebx = 0, intel_sub0_ecx = 0, intel_sub0_edx = 0, intel_sub1_eax = 0;
 	uint32_t amd_ecx = 0, amd_edx = 0;
 	uint32_t centaur_edx = 0;
 
-	int got_intel, got_intel_sub0, got_amd, got_centaur;
+	int got_intel, got_intel_sub0, got_intel_sub1, got_amd, got_centaur;
 
 	const char* last = "";
 	int i;
@@ -105,7 +119,8 @@ int print_flags()
 	/* Intel */
 	got_intel = run_cpuid(0x00000001, 0, 0, &intel_ecx, &intel_edx);
 	/* Intel ext. */
-	got_intel_sub0 = run_cpuid_sub(0x00000007, 0x00000000, 0, &intel_sub0_ebx, &intel_sub0_ecx, 0);
+	got_intel_sub0 = run_cpuid_sub(0x00000007, 0x00000000, 0, &intel_sub0_ebx, &intel_sub0_ecx, &intel_sub0_edx);
+	got_intel_sub1 = run_cpuid_sub(0x00000007, 0x00000001, &intel_sub1_eax, 0, 0, 0);
 	/* AMD */
 	got_amd = run_cpuid(0x80000001, 0, 0, &amd_ecx, &amd_edx);
 	/* Centaur (VIA) */
@@ -134,6 +149,14 @@ int print_flags()
 			case INTEL_SUB0_ECX:
 				if (got_intel_sub0)
 					reg = &intel_sub0_ecx;
+				break;
+			case INTEL_SUB0_EDX:
+				if (got_intel_sub0)
+					reg = &intel_sub0_edx;
+				break;
+			case INTEL_SUB1_EAX:
+				if (got_intel_sub1)
+					reg = &intel_sub1_eax;
 				break;
 			case AMD_ECX:
 				if (got_amd)
