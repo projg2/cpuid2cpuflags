@@ -73,6 +73,8 @@ TESTS = \
 	tests/x86/i3-ivybridge.txt \
 	tests/x86/opteron-6272.txt \
 	tests/x86/xeon-e-2176g.txt \
-	tests/x86/xeon-silver-4410.txt
+	tests/x86/xeon-silver-4410.txt \
+	tests/x86/amd-zen4.txt \
+	tests/x86/xeon-platinum-8480plus.txt
 
 EXTRA_DIST = $(TESTS) tests/test.sh

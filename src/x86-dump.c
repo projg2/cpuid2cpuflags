@@ -60,6 +60,7 @@ int main(int argc, char* argv[])
 	dump(0x00000001);
 	/* Intel ext. */
 	dump_leaf(0x00000007, 0x00000000);
+	dump_leaf(0x00000007, 0x00000001);
 	/* AMD */
 	dump(0x80000001);
 	/* Centaur (VIA) */
