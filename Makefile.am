@@ -75,6 +75,7 @@ TESTS = \
 	tests/x86/xeon-e-2176g.txt \
 	tests/x86/xeon-silver-4410.txt \
 	tests/x86/amd-zen4.txt \
+	tests/x86/amd-zen4-ryzen-7-pro-7840u.txt \
 	tests/x86/xeon-platinum-8480plus.txt
 
 EXTRA_DIST = $(TESTS) tests/test.sh
