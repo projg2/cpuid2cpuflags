@@ -1,6 +1,6 @@
 /* cpuid2cpuflags -- AT_HWCAP* routine prototypes
- * (c) 2015-2019 Michał Górny
- * 2-clause BSD licensed
+ * (c) 2015-2024 Michał Górny
+ * SPDX-License-Identifier: GPL-2.0-or-later
  */
 
 unsigned long get_hwcap();

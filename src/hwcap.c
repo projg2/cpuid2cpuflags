@@ -1,7 +1,7 @@
 /* cpuid2cpuflags -- native AT_HWCAP* getters
- * (c) 2015-2019 Michał Górny
+ * (c) 2015-2024 Michał Górny
  * (c) 2022 Alexey Dokuchaev
- * 2-clause BSD licensed
+ * SPDX-License-Identifier: GPL-2.0-or-later
  */
 
 #ifdef HAVE_CONFIG_H

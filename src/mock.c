@@ -1,6 +1,6 @@
 /* cpuid2cpuflags -- mocked routines for tests
- * (c) 2015-2019 Michał Górny
- * 2-clause BSD licensed
+ * (c) 2015-2024 Michał Górny
+ * SPDX-License-Identifier: GPL-2.0-or-later
  */
 
 #ifdef HAVE_CONFIG_H

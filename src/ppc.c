@@ -1,8 +1,9 @@
 /* cpuid2cpuflags -- PowerPC-specific detection routines
+ * (c) 2015-2024 Michał Górny
  * (c) 2015-2019 Michał Górny
  * (c) 2019 Georgy Yakovlev
  * (c) 2019 Shawn Anastasio
- * 2-clause BSD licensed
+ * SPDX-License-Identifier: GPL-2.0-or-later
  */
 
 #ifdef HAVE_CONFIG_H

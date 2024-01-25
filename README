@@ -1,6 +1,6 @@
 cpuid2cpuflags -- CPU_FLAGS_* generator
-(c) 2017 Michał Górny
-2-clause BSD license
+(c) 2017-2024 Michał Górny
+SPDX-License-Identifier: GPL-2.0-or-later
 
 
 Usage
