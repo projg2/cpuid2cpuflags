@@ -55,6 +55,7 @@ struct subarch_info subarches[] = {
 	/* grep -Rho string.*cpu_arch_name.*$ arch/arm | sort -u */
 	/* start with newest as the most likely */
 	{ "aarch64", SUBARCH_AARCH64 },
+	{ "aarch64_be", SUBARCH_AARCH64 },
 	{ "armv8", SUBARCH_V8 },
 	{ "armv7", SUBARCH_V7 },
 	{ "armv6", SUBARCH_V6 },
