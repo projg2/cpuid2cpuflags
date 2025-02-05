@@ -131,6 +131,7 @@ struct flag_info flags[] = {
 	{ "sm4", CHECK_AARCH64_HWCAP, (1 << 19) },
 	{ "asimddp", CHECK_AARCH64_HWCAP, (1 << 20) },
 	{ "sve", CHECK_AARCH64_HWCAP, (1 << 22) },
+	{ "sve2", CHECK_AARCH64_HWCAP2, (1 << 1) },
 	{ "i8mm", CHECK_AARCH64_HWCAP2, (1 << 13) },
 
 	/* subarches */
