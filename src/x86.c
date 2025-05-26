@@ -56,6 +56,9 @@ struct flag_info flags[] = {
 	{ "3dnow", AMD_EDX, (1 << 31) },
 	{ "3dnowext", AMD_EDX, (1 << 30) }, /* 3DNow!+ */
 	{ "aes", INTEL_ECX, (1 << 25) },
+	{ "amx_bf16", INTEL_SUB0_EDX, (1 << 22) },
+	{ "amx_int8", INTEL_SUB0_EDX, (1 << 25) },
+	{ "amx_tile", INTEL_SUB0_EDX, (1 << 24) },
 	{ "avx", INTEL_ECX, (1 << 28) },
 	{ "avx2", INTEL_SUB0_EBX, (1 << 5) },
 	{ "avx512_4fmaps", INTEL_SUB0_EDX, (1 << 3) },
