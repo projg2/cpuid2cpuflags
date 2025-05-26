@@ -76,6 +76,7 @@ struct flag_info flags[] = {
 	{ "avx512pf", INTEL_SUB0_EBX, (1 << 26) },
 	{ "avx512vbmi", INTEL_SUB0_ECX, (1 << 1) },
 	{ "avx512vl", INTEL_SUB0_EBX, (1 << 31) },
+	{ "avx_vnni", INTEL_SUB1_EAX, (1 << 4) },
 	{ "bmi1", INTEL_SUB0_EBX, (1 << 3) },
 	{ "bmi2", INTEL_SUB0_EBX, (1 << 8) },
 	{ "f16c", INTEL_ECX, (1 << 29) },
