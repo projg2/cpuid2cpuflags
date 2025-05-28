@@ -29,8 +29,13 @@ fi
 echo "Expected: ${EXPECTED}"
 echo "Result:   ${RESULT}"
 if [ "${EXPECTED}" != "${RESULT}" ]; then
-	echo "Result does not match!" >&2
-	RET=1
+  IFS=':' read -ra ADDR <<< "$IN"
+  for i in "${ADDR[@]}"; do
+    if [ "${EXPECTED}" != "${RESULT}" ]; then
+      echo "Result does not match!" >&2
+      RET=1
+    fi
+  done
 fi
 
 exit "${RET}"

@@ -16,6 +16,7 @@
 #	include <stdint.h>
 #endif
 #include <assert.h>
+#include <stdbool.h>
 
 #include "x86.h"
 
@@ -111,7 +112,7 @@ struct flag_info flags[] = {
  *
  * Returns exit status (0 on success, non-zero on failure).
  */
-int print_flags()
+int print_flags( bool quiet )
 {
 	uint32_t intel_ecx = 0, intel_edx = 0;
 	uint32_t intel_sub0_ebx = 0, intel_sub0_ecx = 0, intel_sub0_edx = 0;
@@ -136,7 +137,10 @@ int print_flags()
 	/* Centaur (VIA) */
 	got_centaur = run_cpuid(0xC0000001, 0, 0, 0, &centaur_edx);
 
-	fputs("CPU_FLAGS_X86:", stdout);
+    if (!quiet)
+    {
+        fputs("CPU_FLAGS_X86:", stdout);
+    }
 
 	for (i = 0; flags[i].name; ++i)
 	{
