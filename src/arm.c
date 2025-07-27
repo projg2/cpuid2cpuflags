@@ -102,12 +102,15 @@ struct flag_info flags[] = {
 	{ "edsp", CHECK_HWCAP, (1 << 7) },
 	{ "iwmmxt", CHECK_HWCAP, (1 << 9) },
 	{ "neon", CHECK_HWCAP, (1 << 12) },
+	{ "neon-fp16", CHECK_HWCAP, (1 << 12) | (1 << 1) }, /* HWCAP_NEON + HWCAP_HALF */
 	{ "thumb", CHECK_HWCAP, (1 << 2) },
 	{ "vfp", CHECK_HWCAP, (1 << 6) },
 	{ "vfpv3", CHECK_HWCAP, (1 << 13) },
 	{ "vfpv4", CHECK_HWCAP, (1 << 16) },
 	{ "vfp-d32", CHECK_HWCAP, (1 << 19) },
 	{ "asimddp", CHECK_HWCAP, (1 << 24) },
+	{ "asimdfhm", CHECK_HWCAP, (1 << 25) },
+	{ "asimdhp", CHECK_HWCAP, (1 << 23) },
 	{ "i8mm", CHECK_HWCAP, (1 << 27) },
 	{ "aes", CHECK_HWCAP2, (1 << 0) },
 	{ "sha1", CHECK_HWCAP2, (1 << 2) },
@@ -119,6 +122,7 @@ struct flag_info flags[] = {
 	/* see also sys/arm64/include/elf.h in FreeBSD */
 	{ "edsp", CHECK_SUBARCH, SUBARCH_AARCH64 },
 	{ "neon", CHECK_AARCH64_HWCAP, (1 << 1) }, /* HWCAP_ASIMD */
+	{ "neon-fp16", CHECK_AARCH64_HWCAP, (1 << 1) }, /* same as neon */
 	{ "thumb", CHECK_SUBARCH, SUBARCH_AARCH64 },
 	{ "vfp", CHECK_AARCH64_HWCAP, (1 << 1) }, /* same as neon */
 	{ "vfpv3", CHECK_AARCH64_HWCAP, (1 << 1) }, /* same as neon */
@@ -130,6 +134,8 @@ struct flag_info flags[] = {
 	{ "crc32", CHECK_AARCH64_HWCAP, (1 << 7) },
 	{ "sm4", CHECK_AARCH64_HWCAP, (1 << 19) },
 	{ "asimddp", CHECK_AARCH64_HWCAP, (1 << 20) },
+	{ "asimdfhm", CHECK_AARCH64_HWCAP, (1 << 23) },
+	{ "asimdhp", CHECK_AARCH64_HWCAP, (1 << 10) },
 	{ "sve", CHECK_AARCH64_HWCAP, (1 << 22) },
 	{ "sve2", CHECK_AARCH64_HWCAP2, (1 << 1) },
 	{ "i8mm", CHECK_AARCH64_HWCAP2, (1 << 13) },
