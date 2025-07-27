@@ -52,6 +52,8 @@ struct flag_info flags[] = {
 	{ "vsx2", CHECK_HWCAP2, 0x80000000 },
 	/* PPC_FEATURE2_ARCH_3_00 */
 	{ "vsx3", CHECK_HWCAP2, 0x00800000 },
+	/* PPC_FEATURE2_ARCH_3_1 */
+	{ "vsx4", CHECK_HWCAP2, 0x00040000 },
 	{ 0 }
 };
 
