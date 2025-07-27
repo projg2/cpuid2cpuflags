@@ -1,4 +1,4 @@
-expected:edsp neon neon-fp16 thumb vfp vfpv3 vfpv4 vfp-d32 crc32 v4 v5 v6 v7 v8 thumb2
+expected:edsp neon neon-fp16 thumb vfp vfpv3 vfpv4 vfp-d32 crc32 asimd v4 v5 v6 v7 v8 thumb2
 hwcap:0000000000000887
 hwcap2:0000000000000000
 machine:aarch64

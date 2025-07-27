@@ -75,6 +75,7 @@ struct subarch_info subarches[] = {
  * - CHECK_AARCH64_HWCAP and CHECK_HWCAP2 refer to appropriate values
  *   in 64-bit AArch64 AT_HWCAP,
  * - CHECK_SUBARCH refers to the subarch determined via 'uname -m'.
+ * - CHECK_ARMV8_HWCAP is like CHECK_HWCAP, but only on 32-bit ARMv8+.
  */
 enum check_type
 {
@@ -85,6 +86,7 @@ enum check_type
 	CHECK_AARCH64_HWCAP,
 	CHECK_AARCH64_HWCAP2,
 	CHECK_SUBARCH,
+	CHECK_ARMV8_HWCAP,
 
 	CHECK_MAX
 };
@@ -108,6 +110,7 @@ struct flag_info flags[] = {
 	{ "vfpv3", CHECK_HWCAP, (1 << 13) },
 	{ "vfpv4", CHECK_HWCAP, (1 << 16) },
 	{ "vfp-d32", CHECK_HWCAP, (1 << 19) },
+	{ "asimd", CHECK_ARMV8_HWCAP, (1 << 12) }, /* HWCAP_NEON + armv8 */
 	{ "asimddp", CHECK_HWCAP, (1 << 24) },
 	{ "asimdfhm", CHECK_HWCAP, (1 << 25) },
 	{ "asimdhp", CHECK_HWCAP, (1 << 23) },
@@ -133,6 +136,7 @@ struct flag_info flags[] = {
 	{ "sha2", CHECK_AARCH64_HWCAP, (1 << 6) },
 	{ "crc32", CHECK_AARCH64_HWCAP, (1 << 7) },
 	{ "sm4", CHECK_AARCH64_HWCAP, (1 << 19) },
+	{ "asimd", CHECK_AARCH64_HWCAP, (1 << 1) }, /* same as neon */
 	{ "asimddp", CHECK_AARCH64_HWCAP, (1 << 20) },
 	{ "asimdfhm", CHECK_AARCH64_HWCAP, (1 << 23) },
 	{ "asimdhp", CHECK_AARCH64_HWCAP, (1 << 10) },
@@ -223,6 +227,10 @@ int print_flags()
 				break;
 			case CHECK_SUBARCH:
 				reg = &subarch;
+				break;
+			case CHECK_ARMV8_HWCAP:
+				if (subarch == SUBARCH_V8)
+					reg = &hwcap;
 				break;
 			case CHECK_SENTINEL:
 				assert(0 && "CHECK_SENTINEL reached");
