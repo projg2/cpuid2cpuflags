@@ -120,10 +120,10 @@ struct flag_info flags[] = {
 	{ "edsp", CHECK_SUBARCH, SUBARCH_AARCH64 },
 	{ "neon", CHECK_AARCH64_HWCAP, (1 << 1) }, /* HWCAP_ASIMD */
 	{ "thumb", CHECK_SUBARCH, SUBARCH_AARCH64 },
-	{ "vfp", CHECK_SUBARCH, SUBARCH_AARCH64 },
-	{ "vfpv3", CHECK_SUBARCH, SUBARCH_AARCH64 },
-	{ "vfpv4", CHECK_SUBARCH, SUBARCH_AARCH64 },
-	{ "vfp-d32", CHECK_SUBARCH, SUBARCH_AARCH64 },
+	{ "vfp", CHECK_AARCH64_HWCAP, (1 << 1) }, /* same as neon */
+	{ "vfpv3", CHECK_AARCH64_HWCAP, (1 << 1) }, /* same as neon */
+	{ "vfpv4", CHECK_AARCH64_HWCAP, (1 << 1) }, /* same as neon */
+	{ "vfp-d32", CHECK_AARCH64_HWCAP, (1 << 1) }, /* same as neon */
 	{ "aes", CHECK_AARCH64_HWCAP, (1 << 3) },
 	{ "sha1", CHECK_AARCH64_HWCAP, (1 << 5) },
 	{ "sha2", CHECK_AARCH64_HWCAP, (1 << 6) },
